@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { confirmPasswordReset } from '@/utils/firebase-config';
-import '@/styles/login.css';
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { confirmPasswordReset } from "@/utils/firebase-config";
+import "@/styles/login.css";
 
 function ResetPasswordContent() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [oobCode, setOobCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [manualCodeInput, setManualCodeInput] = useState<string>('');
+  const [manualCodeInput, setManualCodeInput] = useState<string>("");
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -21,56 +21,56 @@ function ResetPasswordContent() {
   useEffect(() => {
     // Sofort nach dem Code suchen, ohne Ladezustand
     try {
-      console.log('Suche nach Reset-Code in URL...');
+      console.log("Suche nach Reset-Code in URL...");
 
       // Aus SearchParams
-      const code = searchParams.get('oobCode');
-      const mode = searchParams.get('mode');
-      const apiKey = searchParams.get('apiKey');
+      const code = searchParams.get("oobCode");
+      const mode = searchParams.get("mode");
+      const apiKey = searchParams.get("apiKey");
 
-      console.log('Gefundene Parameter:', {
+      console.log("Gefundene Parameter:", {
         oobCode: code,
         mode,
         apiKey,
       });
 
       if (code) {
-        console.log('oobCode in SearchParams gefunden:', code);
+        console.log("oobCode in SearchParams gefunden:", code);
         setOobCode(code);
         return;
       }
 
       // Aus window.location.search (als Fallback)
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const urlParams = new URLSearchParams(window.location.search);
-        const codeFromUrl = urlParams.get('oobCode');
+        const codeFromUrl = urlParams.get("oobCode");
 
         if (codeFromUrl) {
-          console.log('oobCode in URLSearchParams gefunden:', codeFromUrl);
+          console.log("oobCode in URLSearchParams gefunden:", codeFromUrl);
           setOobCode(codeFromUrl);
           return;
         }
 
         // Aus dem gesamten URL-String
         const fullUrl = window.location.href;
-        console.log('Volle URL:', fullUrl);
+        console.log("Volle URL:", fullUrl);
 
         const oobMatch = fullUrl.match(/oobCode=([^&]+)/);
         if (oobMatch && oobMatch[1]) {
-          console.log('oobCode in URL-String gefunden:', oobMatch[1]);
+          console.log("oobCode in URL-String gefunden:", oobMatch[1]);
           setOobCode(oobMatch[1]);
           return;
         }
       }
 
-      console.log('Kein oobCode gefunden, setze Fehlermeldung');
+      console.log("Kein oobCode gefunden, setze Fehlermeldung");
       setError(
-        'Es wurde kein Reset-Code in der URL gefunden. Sie können einen neuen Reset-Link anfordern oder den Code manuell eingeben, falls Sie ihn haben.'
+        "Es wurde kein Reset-Code in der URL gefunden. Sie können einen neuen Reset-Link anfordern oder den Code manuell eingeben, falls Sie ihn haben."
       );
     } catch (err) {
-      console.error('Fehler beim Extrahieren des Reset-Codes:', err);
+      console.error("Fehler beim Extrahieren des Reset-Codes:", err);
       setError(
-        'Beim Verarbeiten des Reset-Links ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder fordern Sie einen neuen Reset-Link an.'
+        "Beim Verarbeiten des Reset-Links ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder fordern Sie einen neuen Reset-Link an."
       );
     }
   }, [searchParams]);
@@ -82,18 +82,20 @@ function ResetPasswordContent() {
     const codeToUse = oobCode || manualCodeInput;
 
     if (!codeToUse) {
-      setError('Bitte geben Sie einen Reset-Code ein oder fordern Sie einen neuen Reset-Link an.');
+      setError(
+        "Bitte geben Sie einen Reset-Code ein oder fordern Sie einen neuen Reset-Link an."
+      );
       return;
     }
 
     // Validierung der Passwörter
     if (password !== confirmPassword) {
-      setError('Die Passwörter stimmen nicht überein.');
+      setError("Die Passwörter stimmen nicht überein.");
       return;
     }
 
     if (password.length < 8) {
-      setError('Das Passwort muss mindestens 8 Zeichen lang sein.');
+      setError("Das Passwort muss mindestens 8 Zeichen lang sein.");
       return;
     }
 
@@ -101,26 +103,28 @@ function ResetPasswordContent() {
     setError(null);
 
     try {
-      console.log('Versuche Passwort zurückzusetzen mit Code:', codeToUse);
+      console.log("Versuche Passwort zurückzusetzen mit Code:", codeToUse);
       const result = await confirmPasswordReset(codeToUse, password);
 
       if (result.success) {
-        console.log('Passwort erfolgreich zurückgesetzt');
+        console.log("Passwort erfolgreich zurückgesetzt");
         setSuccess(true);
         // Nach 3 Sekunden zur Login-Seite weiterleiten
         setTimeout(() => {
-          router.push('/login');
+          router.push("/login");
         }, 3000);
       } else {
-        console.error('Fehler beim Zurücksetzen des Passworts:', result.error);
+        console.error("Fehler beim Zurücksetzen des Passworts:", result.error);
         setError(
           result.error ||
-            'Fehler beim Zurücksetzen des Passworts. Bitte fordern Sie einen neuen Link an.'
+            "Fehler beim Zurücksetzen des Passworts. Bitte fordern Sie einen neuen Link an."
         );
       }
     } catch (err) {
-      console.error('Unerwarteter Fehler beim Passwort-Reset:', err);
-      setError('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      console.error("Unerwarteter Fehler beim Passwort-Reset:", err);
+      setError(
+        "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +143,9 @@ function ResetPasswordContent() {
             {success ? (
               <div className="p-4 bg-green-100 text-green-700 rounded-md text-lg">
                 <p>Ihr Passwort wurde erfolgreich zurückgesetzt!</p>
-                <p className="mt-2">Sie werden in Kürze zur Anmeldeseite weitergeleitet...</p>
+                <p className="mt-2">
+                  Sie werden in Kürze zur Anmeldeseite weitergeleitet...
+                </p>
               </div>
             ) : (
               <>
@@ -148,7 +154,7 @@ function ResetPasswordContent() {
                     {error}
                     <div className="mt-2">
                       <button
-                        onClick={() => router.push('/login?reset=true')}
+                        onClick={() => router.push("/login?reset=true")}
                         className="login-link"
                       >
                         Neuen Reset-Link anfordern
@@ -160,8 +166,8 @@ function ResetPasswordContent() {
                 {!oobCode && (
                   <div className="mb-6 p-4 bg-yellow-50 text-yellow-700 rounded-md">
                     <p className="mb-2">
-                      Wenn Sie einen Reset-Code in der E-Mail oder URL haben, geben Sie ihn hier
-                      ein:
+                      Wenn Sie einen Reset-Code in der E-Mail oder URL haben,
+                      geben Sie ihn hier ein:
                     </p>
                     <div className="flex">
                       <input
@@ -210,17 +216,23 @@ function ResetPasswordContent() {
                     />
                   </div>
 
-                  <button type="submit" disabled={isLoading} className="login-button mt-6">
-                    {isLoading ? 'Wird zurückgesetzt...' : 'Passwort zurücksetzen'}
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="login-button mt-6"
+                  >
+                    {isLoading
+                      ? "Wird zurückgesetzt..."
+                      : "Passwort zurücksetzen"}
                   </button>
                 </form>
 
                 <div className="login-footer mt-8">
                   <p className="text-lg text-gray-600">
-                    Zurück zur{' '}
+                    Zurück zur{" "}
                     <button
                       type="button"
-                      onClick={() => router.push('/login')}
+                      onClick={() => router.push("/login")}
                       className="login-link"
                     >
                       Anmeldeseite

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
-import LoginForm from '@/components/LoginForm';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import LoginForm from "@/components/LoginForm";
 
 function LoginContent() {
   const searchParams = useSearchParams();
-  const registered = searchParams.get('registered');
-  const reset = searchParams.get('reset');
+  const registered = searchParams.get("registered");
+  const reset = searchParams.get("reset");
 
   return (
     <div className="login-container">
@@ -20,9 +20,11 @@ function LoginContent() {
         <div className="login-card">
           <div className="login-header">
             <h1 className="login-title">Anmelden</h1>
-            <p className="login-subtitle">Melden Sie sich mit Ihren Zugangsdaten an</p>
+            <p className="login-subtitle">
+              Melden Sie sich mit Ihren Zugangsdaten an
+            </p>
           </div>
-          <LoginForm initialResetMode={reset === 'true'} />
+          <LoginForm initialResetMode={reset === "true"} />
         </div>
       </div>
     </div>
