@@ -1,0 +1,60 @@
+# Firestore-Sicherheitsregeln für Sheen Beauty Studio
+
+Folge diesen Schritten, um die Firestore-Sicherheitsregeln in der Firebase Console anzupassen:
+
+1. Gehe zur [Firebase Console](https://console.firebase.google.com/)
+2. Wähle dein Projekt "sheen-termin" aus
+3. Klicke im linken Menü auf "Firestore Database"
+4. Klicke oben auf den Tab "Rules"
+5. Ersetze die vorhandenen Regeln durch die folgenden:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Einfache Regeln: Jeder kann lesen und schreiben
+    match /bookings/{bookingId} {
+      // Jeder kann Buchungen lesen und erstellen
+      allow read, create: if true;
+      
+      // Nur authentifizierte Benutzer können Buchungen aktualisieren oder löschen
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Andere Sammlungen sind nur für authentifizierte Benutzer zugänglich
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+6. Klicke auf "Publish" (oder "Veröffentlichen"), um die Regeln zu speichern
+
+## Erklärung der Regeln:
+
+- Die vereinfachten Regeln erlauben jedem, Buchungen zu lesen und zu erstellen, ohne Feldvalidierung
+- Nur authentifizierte Benutzer (Admins) können Buchungen aktualisieren oder löschen
+- Andere Sammlungen sind nur für authentifizierte Benutzer zugänglich
+
+## Hinweis:
+
+Diese Regeln sind einfacher als die vorherigen und sollten keine Syntaxfehler verursachen. Sie bieten weniger Validierung, erlauben aber die grundlegende Funktionalität des Buchungssystems.
+
+## Alternative Regeln (falls die einfachen Regeln nicht funktionieren):
+
+Wenn die obigen Regeln immer noch Probleme verursachen, kannst du die folgenden noch einfacheren Regeln verwenden:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Offene Regeln: Jeder kann alles lesen und schreiben (nur für Entwicklung!)
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+ACHTUNG: Diese alternativen Regeln sind sehr offen und sollten nur vorübergehend verwendet werden, bis du eine sicherere Lösung implementieren kannst. 

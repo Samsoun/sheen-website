@@ -1,0 +1,10 @@
+.app-description {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  margin-bottom: 3.2rem;
+  color: #555;
+}
+
+/* App Store Buttons wurden entfernt */
+
+/* Bild-Vergrößerungs-Modal */

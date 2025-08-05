@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app/booking/page.tsx -> @/utils/firebase-config":{"id":6108,"files":[]},"app/booking/page.tsx -> firebase/firestore":{"id":5978,"files":[]},"components/DateTimeSelection.tsx -> @/utils/calendarBlockingService":{"id":3608,"files":[]},"utils/emailService.ts -> @emailjs/browser":{"id":6595,"files":["static/chunks/595.e73eef9635841396.js"]}}';

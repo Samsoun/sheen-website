@@ -1,0 +1,815 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import {
+  auth,
+  getCustomerByUID,
+  updateCustomerData,
+  uploadProfileImage,
+  logoutCustomer,
+  CustomerData,
+  deleteProfileImage,
+  deleteCustomerAccount,
+  getCustomerBookingsHistory,
+} from '@/utils/firebase-config';
+import { calculatePriceComponents } from '@/utils/priceUtils';
+import { onAuthStateChanged } from 'firebase/auth';
+import Link from 'next/link';
+import LoyaltyStatusDisplay from './LoyaltyStatusDisplay';
+
+// Schnittstelle für Buchungsdaten
+interface BookingData {
+  id: string;
+  date: string;
+  time: string;
+  serviceName: string;
+  treatments: {
+    id: string;
+    name: string;
+    duration: number;
+    price: number;
+  }[];
+  price: number;
+  duration: number;
+  status: string;
+}
+
+export default function CustomerProfile() {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [customerData, setCustomerData] = useState<CustomerData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState<Partial<CustomerData>>({});
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+  const [bookings, setBookings] = useState<{
+    past: BookingData[];
+    upcoming: BookingData[];
+    totalCount: number;
+    recentCount: number;
+  }>({
+    past: [],
+    upcoming: [],
+    totalCount: 0,
+    recentCount: 0,
+  });
+  const [activeTab, setActiveTab] = useState<'profile' | 'bookings'>('profile');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  // Benutzer-Authentifizierungsstatus überwachen
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+
+      if (user) {
+        try {
+          // Kundendaten aus Firestore abrufen
+          const data = await getCustomerByUID(user.uid);
+          setCustomerData(data);
+
+          // Buchungsdaten laden
+          const bookingsHistory = await getCustomerBookingsHistory(user.uid);
+
+          // Debug-Information für Buchungen hinzufügen
+          console.log('Buchungshistorie für Benutzer:', user.email, {
+            userId: user.uid,
+            vergangene: bookingsHistory.past.length,
+            kommende: bookingsHistory.upcoming.length,
+            gesamt: bookingsHistory.totalCount,
+            letzte6Monate: bookingsHistory.recentCount,
+            pastData: bookingsHistory.past,
+            upcomingData: bookingsHistory.upcoming,
+          });
+
+          setBookings(bookingsHistory);
+
+          // Profilbild-URL für die Vorschau festlegen, wenn vorhanden
+          if (data?.profileImageUrl) {
+            setProfileImagePreview(data.profileImageUrl);
+          }
+
+          // Bearbeitungsdaten mit aktuellen Daten initialisieren
+          if (data) {
+            setEditData({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              phone: data.phone,
+              birthdate: data.birthdate,
+            });
+          }
+        } catch (err) {
+          console.error('Fehler beim Abrufen der Kundendaten:', err);
+        }
+      } else {
+        // Benutzer ist nicht angemeldet, zur Login-Seite weiterleiten
+        router.push('/login');
+      }
+
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // Validierungsregeln
+    if (name === 'firstName' || name === 'lastName') {
+      // Nur Buchstaben erlauben (inkl. Umlaute und Bindestrich/Leerzeichen für Doppelnamen)
+      if (!/^[a-zA-ZäöüÄÖÜß\s\-]*$/.test(value)) {
+        setValidationErrors((prev) => ({
+          ...prev,
+          [name]: 'Bitte nur Buchstaben eingeben',
+        }));
+      } else {
+        setValidationErrors((prev) => {
+          const newErrors = { ...prev };
+          delete newErrors[name];
+          return newErrors;
+        });
+      }
+    }
+
+    if (name === 'phone') {
+      // Nur Zahlen, Plus am Anfang und Leerzeichen für Formatierung erlauben
+      if (!/^[0-9\+\s]*$/.test(value)) {
+        setValidationErrors((prev) => ({
+          ...prev,
+          [name]: 'Bitte nur Zahlen eingeben',
+        }));
+      } else {
+        setValidationErrors((prev) => {
+          const newErrors = { ...prev };
+          delete newErrors[name];
+          return newErrors;
+        });
+      }
+    }
+
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImage(file);
+
+      // Vorschau erstellen
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && typeof event.target.result === 'string') {
+          setProfileImagePreview(event.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDeleteProfileImage = async () => {
+    if (!currentUser) return;
+
+    setError(null);
+    setSuccess(null);
+
+    try {
+      // Profilbild aus Firebase löschen
+      const deleteResult = await deleteProfileImage(currentUser.uid);
+
+      if (!deleteResult.success) {
+        setError(deleteResult.error || 'Fehler beim Löschen des Profilbilds.');
+        return;
+      }
+
+      // Lokale Zustände zurücksetzen
+      setProfileImage(null);
+      setProfileImagePreview(null);
+
+      // Kundendaten aktualisieren
+      const updatedData = await getCustomerByUID(currentUser.uid);
+      setCustomerData(updatedData);
+
+      setSuccess('Profilbild erfolgreich gelöscht!');
+    } catch (err) {
+      setError('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      console.error('Fehler beim Löschen des Profilbilds:', err);
+    }
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    // Zurücksetzen der Bearbeitungsdaten auf die aktuellen Kundendaten
+    if (customerData) {
+      setEditData({
+        firstName: customerData.firstName,
+        lastName: customerData.lastName,
+        phone: customerData.phone,
+        birthdate: customerData.birthdate,
+      });
+
+      // Profilbild-Vorschau zurücksetzen
+      setProfileImagePreview(customerData.profileImageUrl || null);
+      setProfileImage(null);
+    }
+
+    setIsEditing(false);
+    setError(null);
+    setSuccess(null);
+  };
+
+  const handleSave = async () => {
+    if (!currentUser) return;
+
+    setError(null);
+    setSuccess(null);
+
+    // Prüfen, ob Validierungsfehler vorliegen
+    if (Object.keys(validationErrors).length > 0) {
+      setError('Bitte korrigieren Sie die Eingabefehler, bevor Sie speichern.');
+      return;
+    }
+
+    try {
+      // Daten nur aktualisieren, wenn es tatsächlich Änderungen gibt
+      if (Object.keys(editData).length > 0) {
+        console.log('Aktualisiere Kundendaten:', editData);
+        const updateResult = await updateCustomerData(currentUser.uid, editData);
+
+        if (!updateResult.success) {
+          setError(updateResult.error || 'Fehler beim Aktualisieren der Daten.');
+          return;
+        }
+      }
+
+      // Wenn ein neues Profilbild ausgewählt wurde, hochladen
+      if (profileImage) {
+        console.log('Lade Profilbild hoch');
+        const uploadResult = await uploadProfileImage(currentUser.uid, profileImage);
+
+        if (!uploadResult.success) {
+          setError(
+            'Daten wurden aktualisiert, aber das Profilbild konnte nicht hochgeladen werden.'
+          );
+          return;
+        }
+
+        // Aktualisiere die Vorschau mit der neuen URL
+        setProfileImagePreview(uploadResult.url || null);
+      }
+
+      // Daten neu laden
+      console.log('Lade aktualisierte Kundendaten');
+      const updatedData = await getCustomerByUID(currentUser.uid);
+      setCustomerData(updatedData);
+
+      setSuccess('Profil erfolgreich aktualisiert!');
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Fehler beim Aktualisieren des Profils:', err);
+      setError('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutCustomer();
+      router.push('/');
+    } catch (err) {
+      console.error('Fehler beim Abmelden:', err);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!currentUser) return;
+
+    setError(null);
+    setSuccess(null);
+
+    if (showDeleteConfirm) {
+      try {
+        const result = await deleteCustomerAccount(currentUser.uid);
+
+        if (!result.success) {
+          setError(result.error || 'Fehler beim Löschen des Kontos.');
+          return;
+        }
+
+        router.push('/');
+      } catch (err) {
+        setError('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+        console.error('Fehler beim Löschen des Kontos:', err);
+      } finally {
+        setShowDeleteConfirm(false);
+      }
+    } else {
+      setShowDeleteConfirm(true);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirm(false);
+  };
+
+  // Hilfsfunktion zum Formatieren des Datums
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [year, month, day] = dateStr.split('-');
+    return `${day}.${month}.${year}`;
+  };
+
+  // Renderfunktion für Buchungen
+  const renderBookingItem = (booking: BookingData, isPast: boolean) => {
+    // Berechne die Preiskomponenten für die Buchung
+    const priceComponents = calculatePriceComponents(booking.price);
+
+    return (
+      <div key={booking.id} className="booking-card">
+        <div className="booking-card-header">
+          <div className="booking-date-time">
+            <div className="booking-date flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-[#b2d8db]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              {formatDate(booking.date)}
+            </div>
+            <div className="booking-time flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-gray-600"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {booking.time} Uhr
+            </div>
+          </div>
+          <div className="booking-status">
+            <span
+              className={`status-badge ${
+                booking.status === 'confirmed'
+                  ? 'status-confirmed'
+                  : booking.status === 'cancelled'
+                    ? 'status-cancelled'
+                    : 'status-pending'
+              }`}
+            >
+              {booking.status === 'confirmed'
+                ? 'Bestätigt'
+                : booking.status === 'cancelled'
+                  ? 'Storniert'
+                  : 'Ausstehend'}
+            </span>
+          </div>
+        </div>
+        <div className="booking-details">
+          <div className="booking-treatments">
+            {booking.treatments && booking.treatments.length > 0 ? (
+              <>
+                <h4 className="booking-service-title flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-[#b2d8db]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                    <line x1="16" y1="8" x2="2" y2="22"></line>
+                    <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                  </svg>
+                  Behandlung:
+                </h4>
+                <ul className="booking-treatments-list">
+                  {booking.treatments.map((treatment, index) => (
+                    <li
+                      key={`${booking.id}-${treatment.id}-${index}`}
+                      className="booking-treatment-item"
+                    >
+                      <span className="treatment-name">{treatment.name}</span>
+                      <span className="treatment-duration flex items-center gap-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-3 w-3 text-gray-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {treatment.duration} Min.
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <h4 className="booking-service-title flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-[#b2d8db]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                    <line x1="16" y1="8" x2="2" y2="22"></line>
+                    <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                  </svg>
+                  Behandlung:
+                </h4>
+                <div className="booking-service-name">{booking.serviceName}</div>
+              </>
+            )}
+          </div>
+          <div className="booking-price-duration">
+            <div className="booking-price flex flex-col">
+              <div className="flex items-center gap-1 text-[#28a745] font-semibold">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                {priceComponents.grossFormatted}
+              </div>
+              <div className="price-details text-xs text-gray-500 mt-1">
+                <div>Netto: {priceComponents.netFormatted}</div>
+                <div>MwSt (19%): {priceComponents.vatFormatted}</div>
+              </div>
+            </div>
+            <div className="booking-duration flex items-center gap-1 text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {booking.duration} Min.
+            </div>
+          </div>
+        </div>
+
+        {!isPast && booking.status !== 'cancelled' && (
+          <div className="booking-actions">
+            <button className="btn-cancel-booking flex items-center gap-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              Termin stornieren
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Diese Komponente wird durch die neue LoyaltyStatusDisplay ersetzt
+  const LoyaltyPointsDisplay = ({ count }: { count: number }) => {
+    console.log(`LoyaltyPointsDisplay aufgerufen mit count: ${count}`); // Debugging-Log hinzufügen
+    return (
+      <div className="loyalty-points-container">
+        <LoyaltyStatusDisplay customerId={currentUser?.uid || ''} bookingCount={count} />
+      </div>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center py-20">
+        <div className="w-24 h-24 relative">
+          <svg
+            className="animate-spin w-full h-full text-b2d8db"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="#b2d8db"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="#b2d8db"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </div>
+        <p className="mt-8 text-2xl text-gray-600 font-medium">Daten werden geladen...</p>
+      </div>
+    );
+  }
+
+  if (!currentUser || !customerData) {
+    return (
+      <div className="profile-card">
+        <div className="profile-content text-center py-12 px-6 md:px-12">
+          <div className="mb-8">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="mx-auto h-28 w-28 text-[#b2d8db]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Sie sind nicht angemeldet</h2>
+          <p className="text-xl text-gray-600 mb-10">
+            Bitte melden Sie sich an, um Ihr Profil zu sehen.
+          </p>
+          <button onClick={() => router.push('/login')} className="btn--form">
+            Zur Anmeldung
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="profile-card relative">
+      {error && (
+        <div className="form-feedback error">
+          <strong>Fehler:</strong> {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="form-feedback success">
+          <strong>Erfolg!</strong> {success}
+        </div>
+      )}
+
+      {showDeleteConfirm && (
+        <div className="delete-warning">
+          <h3 className="delete-warning-title">Warnung: Konto löschen?</h3>
+          <p className="delete-warning-text">
+            Wenn Sie Ihr Konto löschen, gehen alle Ihre persönlichen Daten unwiderruflich verloren.
+            Sie können nicht mehr an Treuepunkte-Aktionen teilnehmen und erhalten keine
+            Geburtstagsrabatte mehr.
+          </p>
+          <div className="delete-warning-buttons">
+            <button onClick={handleDeleteAccount} className="btn--danger">
+              Konto endgültig löschen
+            </button>
+            <button onClick={handleCancelDelete} className="btn--cancel">
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Tabs für Navigation zwischen Profil und Buchungen */}
+      <div className="profile-tabs">
+        <button
+          className={`profile-tab ${activeTab === 'profile' ? 'active' : ''}`}
+          onClick={() => setActiveTab('profile')}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Mein Profil
+        </button>
+        <button
+          className={`profile-tab ${activeTab === 'bookings' ? 'active' : ''}`}
+          onClick={() => setActiveTab('bookings')}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Meine Buchungen
+          {bookings.totalCount > 0 && <span className="booking-count">{bookings.totalCount}</span>}
+        </button>
+      </div>
+
+      {activeTab === 'profile' ? (
+        // Profilinhaltsbereich mit modernerem Design
+        <div className="profile-content bg-white rounded-b-lg">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Profilbild-Bereich */}
+            <div className="profile-image-container">
+              <div className="profile-image relative rounded-full overflow-hidden shadow-md border-4 border-[#e8f3f4]">
+                {profileImagePreview ? (
+                  <Image
+                    src={profileImagePreview}
+                    alt="Profilbild"
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#e8f3f4] flex items-center justify-center rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-24 w-24 md:h-32 md:w-32 text-[#b2d8db]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+
+              {isEditing && (
+                <div className="w-full mt-4 flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="btn--edit w-full"
+                  >
+                    Profilbild ändern
+                  </button>
+                  {profileImagePreview && (
+                    <button
+                      type="button"
+                      onClick={handleDeleteProfileImage}
+                      className="btn--logout w-full"
+                    >
+                      Profilbild entfernen
+                    </button>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfileImageChange}
+                    className="hidden"
+                  />
+                </div>
+              )}
+
+              <div className="text-center mt-6 mb-4">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                  {customerData?.firstName} {customerData?.lastName}
+                </h2>
+                <p className="text-base text-gray-600 flex items-center justify-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-[#b2d8db]"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                  </svg>
+                  {customerData?.email}
+                </p>
+              </div>
+
+              <div className="w-full mt-8">
+                <button onClick={handleLogout} className="btn--logout w-full">
+                  Abmelden
+                </button>
+
+                <button onClick={handleDeleteAccount} className="btn--delete w-full mt-4">
+                  Konto löschen
+                </button>
+              </div>
+            </div>
+
+            {/* Profildaten-Bereich */}
+            <div className="profile-details bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <h3 className="profile-details-title">Persönliche Daten</h3>
+
+              <div className="profile-details-content">
+                {isEditing ? (
+                  <>
+                    <div className="profile-details-grid">
+                      <div className="profile-detail-item">
+                        <label
+                          htmlFor="firstName"
+                          className="block text-base md:text-lg font-medium text-gray-700 mb-2"
+                        >
+                          Vorname
+                        </label>
+                        <input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          value={editData.firstName || ''}
+                          onChange={handleChange}
+                          className={`login-input ${validationErrors.firstName ? 'border-red-500' : ''}`}
+                        />
+                        {validationErrors.firstName && (
+                          <p className="text-red-500 text-sm mt-1">{validationErrors.firstName}</p>
+                        )}
+                      </div>
+
+                      <div className="profile-detail-item">
+                        <label
+                          htmlFor="lastName"
+                          className="block text-base md:text-lg font-medium text-gray-700 mb-2"
+                        >
+                          Nachname
+                        </label>
+                        <input
+                          id="lastName"
+                          name="lastName"
+                          type="text"
+                          value={editData.lastName || ''}
+                          onChange={handleChange}
+                          className={`

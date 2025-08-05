@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Buchen Sie Ihren Termin bei Sheen Beauty Studio. Wir bieten professionelle Microblading, Lash Lifting und Permanent Make-up Services in Berlin."
+    />
+    <link rel="icon" href="img/Icon_sheen.png" />
+    <link rel="apple-touch-icon" href="img/Icon_sheen.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/booking.css" />
+    <link rel="stylesheet" href="css/queries.css" />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        // EmailJS initialisieren
+        emailjs.init("jjBT0mSIJ15QACfrL");
+      })();
+    </script>
+
+    <!-- Firebase Konfiguration -->
+    <script>
+      // Firebase-Konfiguration
+      const firebaseConfig = {
+        apiKey: "AIzaSyB7tnzEzeRBqQ1JL8aNgRe2PPuOS0Mt5Ms",
+        authDomain: "sheen-termin.firebaseapp.com",
+        projectId: "sheen-termin",
+        storageBucket: "sheen-termin.appspot.com",
+        messagingSenderId: "531525100411",
+        appId: "1:531525100411:web:59b8c142e3deca949613de",
+        measurementId: "G-F69XYP1FV5",
+      };
+
+      // Firebase initialisieren
+      firebase.initializeApp(firebaseConfig);
+
+      // Firestore-Referenz erstellen
+      const db = firebase.firestore();
+
+      // Globale Variablen für Debugging
+      window.firebase = firebase;
+      window.db = db;
+
+      console.log("Firebase initialized in booking.html");
+      console.log("Firebase object:", typeof firebase);
+      console.log("Firestore db object:", typeof db);
+    </script>
+
+    <title>Sheen &mdash; Termin buchen</title>
+  </head>
+  <body>
+    <header class="header">
+      <a href="index.html" class="home-button">
+        <ion-icon name="home-outline" class="home-icon"></ion-icon>
+        Home
+      </a>
+    </header>
+
+    <main>
+      <section class="section-booking">
+        <div class="container">
+          <h2 class="heading-secondary booking-heading">
+            Buchen Sie Ihren Termin
+          </h2>
+          <p class="booking-description">
+            Wählen Sie Ihren gewünschten Service und einen passenden Termin. Wir
+            freuen uns darauf, Sie bei Sheen Beauty Studio begrüßen zu dürfen!
+          </p>
+
+          <div class="booking-container">
+            <div class="booking-form-container">
+              <form class="booking-form" id="booking-form">
+                <div class="form-group">
+                  <label for="service">Service auswählen</label>
+                  <select id="service" name="service" required>
+                    <option value="">Wähle einen Service</option>
+                    <option value="browlifting">Browlifting</option>
+                    <option value="brow-design">Brow Design</option>
+                    <option value="lash-lifting">Lash Lifting</option>
+                    <option value="lipblush">LipBlush</option>
+                    <option value="microblading">Microblading</option>
+                    <option value="eyeliner">Eyeliner</option>
+                    <option value="microneedling">Microneedling</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="date">Datum</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    required
+                    min="<?php echo date('Y-m-d'); ?>"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="time">Uhrzeit</label>
+                  <select id="time" name="time" required>
+                    <option value="">Wähle zuerst ein Datum</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="full-name">Name</label>
+                  <input
+                    type="text"
+                    id="full-name"
+                    name="name"
+                    placeholder="Dein Name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">E-Mail</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="deine@email.de"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Telefon</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Deine Telefonnummer"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Nachricht (optional)</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Hast du besondere Wünsche oder Fragen?"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn-confirm">Termin buchen</button>
+              </form>
+            </div>
+
+            <div class="booking-info">
+              <h3>Buchungsinformationen</h3>
+
+              <!-- Google Calendar Authorization Button - Wird entfernt, da nur für Admin bestimmt -->
+              <!-- <div class="info-item calendar-auth">
+                <ion-icon name="calendar-outline" class="info-icon"></ion-icon>
+                <div>
+                  <h4>Google Kalender</h4>
+                  <p>Verbinde deinen Google Kalender, um Termine automatisch zu synchronisieren.</p>
+                  <button id="google-auth-btn" class="btn btn-google">
+                    <ion-icon name="logo-google" class="google-icon"></ion-icon>
+                    Mit Google verbinden
+                  </button>
+                </div>
+              </div> -->
+
+              <div class="info-item">
+                <ion-icon name="time-outline" class="info-icon"></ion-icon>
+                <div>
+                  <h4>Öffnungszeiten</h4>
+                  <p>Montag - Freitag: <strong>10:00 - 19:00 Uhr</strong></p>
+                  <p>Samstag: <strong>10:00 - 16:00 Uhr</strong></p>
+                  <p>Sonntag: <strong>Geschlossen</strong></p>
+                </div>
+              </div>
+              <div class="info-item">
+                <ion-icon name="location-outline" class="info-icon"></ion-icon>
+                <div>
+                  <h4>Adresse</h4>
+                  <p>Kurfürstendamm 180, 10707 Berlin</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <ion-icon name="call-outline" class="info-icon"></ion-icon>
+                <div>
+                  <h4>Kontakt</h4>
+                  <p>Telefon: <strong>+49 176-32812602</strong></p>
+                  <p>E-Mail: <strong>kontakt@sheenberlin.de</strong></p>
+                </div>
+              </div>
+              <div class="info-item">
+                <ion-icon
+                  name="information-circle-outline"
+                  class="info-icon"
+                ></ion-icon>
+                <div>
+                  <h4>Hinweis</h4>
+                  <p>
+                    Bitte erscheinen Sie 5-10 Minuten vor Ihrem Termin. Bei
+                    Verspätung kann sich die Behandlungszeit verkürzen.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 class="modal-title">Terminbestätigung</h3>
+        <div id="confirmation-details" class="modal-description">
+          <!-- Details will be filled by JavaScript -->
+        </div>
+        <div class="modal-buttons">
+          <button id="confirm-booking" class="btn btn-confirm">
+            Bestätigen
+          </button>
+          <button id="cancel-booking" class="btn btn-cancel">Abbrechen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 class="modal-title">Buchung erfolgreich!</h3>
+        <div class="modal-description">
+          <p>
+            Ihr Termin wurde erfolgreich gebucht. Eine Bestätigung wurde an Ihre
+            E-Mail-Adresse gesendet.
+          </p>
+          <p>
+            Wir freuen uns darauf, Sie bei Sheen Beauty Studio begrüßen zu
+            dürfen!
+          </p>
+        </div>
+        <div class="modal-buttons">
+          <button id="back-to-home" class="btn btn-confirm">
+            Zurück zur Startseite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms Modal für Behandlungsbedingungen -->
+    <div id="terms-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 class="modal-title">Wichtige Behandlungsbedingungen</h3>
+        <div id="terms-content" class="modal-description">
+          <!-- Inhalt wird dynamisch je nach Service gefüllt -->
+        </div>
+        <div class="checkbox-container">
+          <input
+            type="checkbox"
+            id="terms-checkbox"
+            name="terms-checkbox"
+            required
+          />
+          <label for="terms-checkbox"
+            >Ich habe die Behandlungsbedingungen gelesen und bin damit
+            einverstanden</label
+          >
+        </div>
+        <div class="modal-buttons">
+          <button id="accept-terms" class="btn btn-confirm" disabled>
+            Bestätigen und fortfahren
+          </button>
+          <button id="cancel-terms" class="btn btn-cancel">Abbrechen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Erfolgs-Popup -->
+    <div id="success-popup" class="popup hidden">
+      <div class="popup-content">
+        <h3>Buchung erfolgreich!</h3>
+        <p>
+          Vielen Dank für deine Buchung. Wir haben dir eine Bestätigungs-E-Mail
+          gesendet.
+        </p>
+        <button class="btn btn--form" onclick="closePopup()">Schließen</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container grid grid--footer">
+        <div class="logo-col">
+          <a href="#" class="footer-logo">
+            <img class="logo" alt="Sheen logo" src="img/logo_sheen.png" />
+          </a>
+          <p class="footer-text">
+            Enhance your natural beauty with Sheen. Professional microblading,
+            lash lifting, and permanent makeup services in the heart of Berlin.
+          </p>
+          <div class="footer-contact">
+            <p class="contact-heading">Opening Hours:</p>
+            <p class="hours">Mon - Fri: 10:00 - 19:00</p>
+            <p class="hours">Sat: 10:00 - 16:00</p>
+          </div>
+        </div>
+
+        <div class="address-col">
+          <p class="footer-heading">Visit Us</p>
+          <address class="contacts">
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="location-outline"></ion-icon>
+              <p>Kurfürstendamm 180, 10707 Berlin</p>
+            </div>
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="call-outline"></ion-icon>
+              <a class="footer-link" href="tel:+4917632812602"
+                >+49 176-32812602</a
+              >
+            </div>
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="mail-outline"></ion-icon>
+              <a class="footer-link" href="mailto:kontakt@sheenberlin.de"
+                >kontakt@sheenberlin.de</a
+              >
+            </div>
+          </address>
+        </div>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Quick Links</p>
+          <ul class="footer-nav">
+            <li>
+              <a class="footer-link" href="index.html#service">Our Services</a>
+            </li>
+            <li>
+              <a class="footer-link" href="index.html#testimonials"
+                >Testimonials</a
+              >
+            </li>
+            <li>
+              <a class="footer-link" href="location.html" target="_blank"
+                >Find us on Maps</a
+              >
+            </li>
+            <li>
+              <a class="footer-link" href="datenschutz.html">Privacy Policy</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="social-col">
+          <p class="footer-heading">Follow Us</p>
+          <div class="social-links">
+            <a
+              class="social-link"
+              href="https://www.instagram.com/sheen_beautystudio/"
+              target="_blank"
+              aria-label="Follow us on Instagram"
+            >
+              <ion-icon class="social-icon" name="logo-instagram"></ion-icon>
+            </a>
+            <a
+              class="social-link"
+              href="https://www.treatwell.de/ort/sheen-berlin/"
+              target="_blank"
+              aria-label="Book on Treatwell"
+            >
+              <img
+                src="img/treatwell-icon.jpg"
+                alt="Treatwell"
+                class="social-icon treatwell-icon"
+              />
+            </a>
+          </div>
+          <p class="copyright">
+            &copy; <span class="year">2024</span> Sheen Beauty Studio. <br />All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Skripte in der richtigen Reihenfolge laden -->
+    <!-- <script defer src="js/script.js"></script> -->
+    <script defer src="js/booking.js"></script>
+
+    <!-- Debug-Skript für Firebase -->
+    <script>
+      // Überprüfen, ob Firebase und Firestore nach dem Laden der Seite verfügbar sind
+      window.addEventListener("load", function () {
+        console.log("Window loaded - checking Firebase availability");
+        console.log("Firebase available:", typeof firebase !== "undefined");
+        console.log("Firestore available:", typeof db !== "undefined");
+
+        if (typeof firebase === "undefined") {
+          console.error(
+            "Firebase ist nach dem Laden der Seite nicht verfügbar!"
+          );
+        }
+
+        if (typeof db === "undefined") {
+          console.error(
+            "Firestore db ist nach dem Laden der Seite nicht verfügbar!"
+          );
+
+          // Versuchen, db erneut zu initialisieren
+          if (
+            typeof firebase !== "undefined" &&
+            typeof firebase.firestore === "function"
+          ) {
+            try {
+              window.db = firebase.firestore();
+              console.log(
+                "Firestore db wurde erneut initialisiert:",
+                typeof window.db
+              );
+            } catch (error) {
+              console.error(
+                "Fehler bei der erneuten Initialisierung von Firestore:",
+                error
+              );
+            }
+          }
+        }
+      });
+    </script>
+
+    <!-- Cookie Notice -->
+    <div class="cookie-banner" id="cookieBanner">
+      <div class="cookie-content">
+        <h3>Cookie Notice</h3>
+        <p>
+          We use cookies to provide you with the best possible experience on our
+          website. By continuing to use this website, you consent to the use of
+          cookies. These help us improve the website and offer you optimized
+          features.
+        </p>
+        <div class="cookie-buttons">
+          <button id="cookieAccept" class="btn-cookie-accept">Accept</button>
+          <button id="cookieDecline" class="btn-cookie-decline">Decline</button>
+          <a href="datenschutz.html" class="cookie-more-info">Learn more</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

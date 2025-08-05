@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import der Original-CSS-Dateien */
+@import "../styles/general.css";
+@import "../styles/style.css";
+@import "../styles/queries.css";
+@import "../styles/booking.css";
+@import "../styles/profile.css";
+@import "../styles/login.css";
+
+/* Zusätzliche globale Stile können hier hinzugefügt werden */
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+}
+
+@layer utilities {
+  /* Benutzerdefinierte Dienstprogramme können hier hinzugefügt werden */
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+/* CSS um Cookie-Banner zu verstecken (außer unsere eigene) */
+div[id*="cookie-banner"]:not(.cookie-banner),
+div[class*="cookie-banner"]:not(.cookie-banner),
+div[id*="cookie-notice"]:not(.cookie-banner),
+div[class*="cookie-notice"]:not(.cookie-banner),
+div[id*="cookie-policy"]:not(.cookie-banner),
+div[class*="cookie-policy"]:not(.cookie-banner),
+div[id*="cookie-consent"]:not(.cookie-banner),
+div[class*="cookie-consent"]:not(.cookie-banner),
+div[id*="cookie-popup"]:not(.cookie-banner),
+div[class*="cookie-popup"]:not(.cookie-banner),
+div[aria-label*="cookie"]:not(.cookie-banner),
+#CybotCookiebotDialog,
+#onetrust-banner-sdk,
+#cookie-law-info-bar,
+#cookie-notice,
+#cookiebanner,
+#cookie-banner:not(.cookie-banner),
+.cc-window,
+.cookie-dialog {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+  z-index: -999 !important;
+  overflow: hidden !important;
+}

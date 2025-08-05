@@ -1,0 +1,662 @@
+/* Rabatt-Display Styles */
+
+.discount-display {
+  margin: 2rem 0;
+}
+
+.discount-guest-info,
+.discount-loading {
+  margin: 2rem 0;
+}
+
+/* Discount Card Base */
+.discount-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 1.2rem;
+  padding: 2rem;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.discount-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #b2d8db, #9bc5c8);
+}
+
+/* Active Discount Card */
+.discount-card.discount-active {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #b2d8db;
+  box-shadow: 0 0.6rem 2rem rgba(178, 216, 219, 0.2);
+}
+
+.discount-card.discount-active::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+  height: 6px;
+}
+
+/* Progress Discount Card */
+.discount-card.discount-progress {
+  background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+  border-color: #fbbf24;
+}
+
+.discount-card.discount-progress::before {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+/* Info Card (for guests) */
+.discount-card.discount-info {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: #cbd5e1;
+}
+
+.discount-card.discount-info::before {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+}
+
+/* Discount Header */
+.discount-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.discount-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  color: #6b7280;
+  font-size: 2rem;
+}
+
+.discount-icon-active {
+  background: linear-gradient(135deg, #b2d8db 0%, #9bc5c8 100%);
+  color: #ffffff;
+  box-shadow: 0 0.4rem 1.2rem rgba(178, 216, 219, 0.3);
+}
+
+.discount-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.8rem 1.6rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1.4rem;
+  box-shadow: 0 0.4rem 1rem rgba(16, 185, 129, 0.3);
+}
+
+/* Discount Content */
+.discount-content {
+  flex: 1;
+}
+
+.discount-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.discount-description {
+  font-size: 1.4rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Price Calculation */
+.discount-calculation {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 1.4rem;
+}
+
+.price-row.original-price {
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.price-row.discount-amount {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.price-row.final-price {
+  border-top: 2px solid #e5e7eb;
+  margin-top: 0.8rem;
+  padding-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Discount Savings */
+.discount-savings {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 0.8rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  box-shadow: 0 0.4rem 1rem rgba(16, 185, 129, 0.2);
+}
+
+/* Progress Container */
+.progress-container {
+  margin: 1.5rem 0;
+}
+
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 1rem;
+  height: 1rem;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+  height: 100%;
+  border-radius: 1rem;
+  transition: width 0.6s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.progress-motivation {
+  background: rgba(245, 158, 11, 0.1);
+  color: #92400e;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* Compact Badge */
+.discount-badge-compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 0.2rem 0.8rem rgba(16, 185, 129, 0.3);
+}
+
+.discount-badge-compact ion-icon {
+  font-size: 1.4rem;
+}
+
+/* Loading Spinner */
+.discount-loading {
+  text-align: center;
+}
+
+.discount-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #b2d8db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .discount-card {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .discount-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .discount-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.6rem;
+  }
+
+  .discount-badge {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  .discount-title {
+    font-size: 1.6rem;
+  }
+
+  .discount-calculation {
+    padding: 1rem;
+  }
+
+  .price-row {
+    font-size: 1.3rem;
+  }
+
+  .price-row.final-price {
+    font-size: 1.5rem;
+  }
+
+  .discount-savings {
+    font-size: 1.3rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .discount-card {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .discount-title {
+    font-size: 1.4rem;
+  }
+
+  .discount-description {
+    font-size: 1.3rem;
+  }
+
+  .price-row {
+    font-size: 1.2rem;
+  }
+
+  .price-row.final-price {
+    font-size: 1.4rem;
+  }
+}
+
+/* User Discount Profile Styles */
+
+.user-discount-profile {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.discount-profile-guest,
+.discount-profile-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Compact Profile */
+.discount-profile-compact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loyalty-compact {
+  position: relative;
+}
+
+.progress-ring {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+
+.progress-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.birthday-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Birthdate Input */
+.birthdate-input-group {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  align-items: center;
+}
+
+.birthdate-input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  transition: border-color 0.3s ease;
+}
+
+.birthdate-input:focus {
+  outline: none;
+  border-color: #b2d8db;
+  box-shadow: 0 0 0 3px rgba(178, 216, 219, 0.1);
+}
+
+.save-birthdate-btn {
+  background: linear-gradient(135deg, #b2d8db 0%, #9bc5c8 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-birthdate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0.4rem 1.2rem rgba(178, 216, 219, 0.3);
+}
+
+.save-birthdate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.message {
+  padding: 1rem;
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.message.success {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.message.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Eligible Message */
+.eligible-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.celebration {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.eligible-message h4 {
+  font-size: 2rem;
+  color: #059669;
+  margin-bottom: 1rem;
+}
+
+.eligible-message p {
+  font-size: 1.6rem;
+  color: #6b7280;
+}
+
+/* Birthday Status */
+.birthday-active {
+  text-align: center;
+  padding: 2rem;
+}
+
+.birthday-active h4 {
+  font-size: 2rem;
+  color: #059669;
+  margin-bottom: 1rem;
+}
+
+.birthday-week-info {
+  background: #f0fdf4;
+  color: #166534;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.birthday-waiting p {
+  font-size: 1.6rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* Benefits and Info Lists */
+.benefits-info,
+.birthday-info {
+  background: rgba(178, 216, 219, 0.1);
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.benefits-info h5,
+.birthday-info h5 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.benefits-info ul,
+.birthday-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits-info li,
+.birthday-info li {
+  padding: 0.5rem 0;
+  font-size: 1.3rem;
+  color: #6b7280;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.benefits-info li::before,
+.birthday-info li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Tips Section */
+.discount-tips {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.tip {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.tip ion-icon {
+  font-size: 2.4rem;
+  color: #b2d8db;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
+}
+
+.tip h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.tip p {
+  font-size: 1.3rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .user-discount-profile {
+    padding: 1rem;
+  }
+
+  .profile-title {
+    font-size: 2rem;
+  }
+
+  .birthdate-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .save-birthdate-btn {
+    width: 100%;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .discount-profile-compact {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .birthday-compact {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .eligible-message .celebration {
+    font-size: 3rem;
+  }
+
+  .eligible-message h4 {
+    font-size: 1.6rem;
+  }
+
+  .birthday-active h4 {
+    font-size: 1.6rem;
+  }
+
+  .tip {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tip ion-icon {
+    align-self: center;
+    margin-top: 0;
+  }
+}
+
+/* Animation für neue Rabatte */
+@keyframes discount-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.discount-card.discount-active {
+  animation: discount-appear 0.6s ease-out;
+}
+
+/* Pulse-Animation für aktive Rabatte */
+@keyframes discount-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0.6rem 2rem rgba(178, 216, 219, 0.2);
+  }
+  50% {
+    box-shadow: 0 0.8rem 2.4rem rgba(178, 216, 219, 0.4);
+  }
+}
+
+.discount-card.discount-active:hover {
+  animation: discount-pulse 2s infinite;
+}

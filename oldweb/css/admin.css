@@ -1,0 +1,94 @@
+.section-admin {
+  padding: 4.8rem 0;
+  background-color: #f7fbfb;
+  min-height: 80vh;
+}
+
+.admin-form {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 3.2rem;
+  background-color: #fff;
+  border-radius: 11px;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 2.4rem;
+  margin-bottom: 2.4rem;
+  align-items: flex-end;
+}
+
+.filter-controls .form-group {
+  flex: 1;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2.4rem;
+  background-color: #fff;
+  border-radius: 11px;
+  overflow: hidden;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+}
+
+.bookings-table th,
+.bookings-table td {
+  padding: 1.2rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.bookings-table th {
+  background-color: #b2d8db;
+  color: #fff;
+  font-weight: 600;
+}
+
+.bookings-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bookings-table tr:hover {
+  background-color: #f7fbfb;
+}
+
+.status-select {
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  width: 100%;
+}
+
+.status-select option[value="pending"] {
+  background-color: #ffd166;
+}
+
+.status-select option[value="confirmed"] {
+  background-color: #06d6a0;
+}
+
+.status-select option[value="cancelled"] {
+  background-color: #ef476f;
+}
+
+.btn-delete {
+  background-color: #ef476f;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-delete:hover {
+  background-color: #d64161;
+}
