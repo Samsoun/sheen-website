@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { confirmPasswordReset } from '@/utils/firebase-config';
 import '@/styles/login.css';
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [oobCode, setOobCode] = useState<string | null>(null);
@@ -233,5 +233,13 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div>Wird geladen...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

@@ -1,9 +1,10 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import LoginForm from '@/components/LoginForm';
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams();
   const registered = searchParams.get('registered');
   const reset = searchParams.get('reset');
@@ -25,5 +26,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Wird geladen...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
