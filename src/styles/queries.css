@@ -201,8 +201,13 @@ Instead, 1rem = 1em = 16px */
 /***********************************/
 
 @media (max-width: 34em) {
+  html {
+    /* 7px / 16px = 0.4375 = 43.75% */
+    font-size: 43.75%;
+  }
+
   .grid {
-    grid-row: 4.8rem;
+    row-gap: 4.8rem;
   }
 
   .grid--2-cols,
@@ -210,10 +215,21 @@ Instead, 1rem = 1em = 16px */
   .grid--4-cols {
     grid-template-columns: 1fr;
   }
+
+  /* Services untereinander für mobile Geräte */
+  .section-service .grid--3-cols {
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
   .btn,
   .btn:link,
   .btn:visited {
     padding: 2.4rem 1.6rem;
+    font-size: 1.8rem;
+    border-radius: 12px;
   }
 
   .section-hero {
@@ -221,14 +237,28 @@ Instead, 1rem = 1em = 16px */
   }
 
   .hero {
-    padding: 0 3.2rem;
+    padding: 0 2.4rem;
+    gap: 4.8rem;
   }
 
   .hero-img {
-    width: 80%;
+    width: 90%;
   }
+
+  .heading-primary {
+    font-size: 4.4rem;
+    line-height: 1.1;
+    margin-bottom: 3.2rem;
+  }
+
+  .hero-description {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-bottom: 3.2rem;
+  }
+
   .logos img {
-    height: 1.2rem;
+    height: 1.8rem;
   }
 
   .step-img-box:nth-child(2) {
@@ -243,6 +273,60 @@ Instead, 1rem = 1em = 16px */
 
   .testimonials {
     grid-template-columns: 1fr;
+    gap: 3.2rem;
+  }
+
+  /* Mobile Testimonials Layout */
+  .testimonials-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+    align-items: center;
+  }
+
+  .testimonial-card {
+    width: 100%;
+    max-width: 50rem;
+    padding: 3.2rem 2.4rem;
+    border-radius: 16px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .testimonial-author-image {
+    margin-bottom: 2.4rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-img {
+    border-radius: 50%;
+    border: 4px solid #b2d8db;
+    width: 80px;
+    height: 80px;
+  }
+
+  .testimonial-text {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: 2.4rem;
+    font-style: italic;
+    color: #333;
+  }
+
+  .testimonial-name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #b2d8db;
   }
 
   .gallery {
@@ -259,6 +343,66 @@ Instead, 1rem = 1em = 16px */
   }
   .cta-text-box {
     padding: 3.2rem;
+  }
+
+  /* Mobile-optimierte Service-Sektion */
+  .service {
+    padding: 2.4rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .service-title {
+    font-size: 2.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .service-attributes {
+    gap: 1.2rem;
+  }
+
+  .service-attribute {
+    font-size: 1.6rem;
+  }
+
+  /* Mobile-optimierte Testimonials */
+  .testimonial-text {
+    font-size: 1.8rem;
+    line-height: 1.6;
+  }
+
+  .testimonial-author {
+    font-size: 1.6rem;
+  }
+
+  /* Mobile-optimierte Contact Section */
+  .cta-form input,
+  .cta-form select,
+  .cta-form textarea {
+    padding: 1.6rem;
+    font-size: 1.8rem;
+    border-radius: 8px;
+  }
+
+  /* Mobile Navigation Verbesserungen */
+  .header {
+    padding: 0 2.4rem;
+    height: 8rem;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  /* Bessere Touch-Targets für mobile */
+  .btn-mobile-nav {
+    padding: 1.2rem;
+    border-radius: 8px;
+  }
+
+  .icon-mobile-nav {
+    height: 3.6rem;
+    width: 3.6rem;
   }
 }
 
@@ -318,5 +462,481 @@ Instead, 1rem = 1em = 16px */
   .no-flexbox-gap .main-nav-list li:not(:last-child) {
     margin-right: 0;
     margin-bottom: 4.8rem;
+  }
+}
+
+/***********************************/
+/* iPhone und sehr kleine Geräte  */
+/***********************************/
+@media (max-width: 425px) {
+  html {
+    /* 6px / 16px = 0.375 = 37.5% */
+    font-size: 37.5%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 0 1.6rem;
+  }
+
+  .section {
+    padding: 4.8rem 0;
+  }
+
+  /* iPhone-optimierte Header */
+  .header {
+    padding: 0 1.6rem;
+    height: 7rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .logo {
+    width: 60px;
+    height: auto;
+    max-height: 3.5rem;
+  }
+
+  /* iPhone-optimierte Hero-Sektion */
+  .section-hero {
+    padding: 0 !important;
+    margin-top: 0 !important;
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hero {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .hero-static {
+    height: auto;
+  }
+
+  .hero-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    align-items: stretch !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+  }
+
+  .hero-slide:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    align-items: stretch !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+  }
+
+  .hero-img-box {
+    order: 1 !important;
+    height: 100vh !important;
+    height: 100dvh !important; /* Dynamic viewport height */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    grid-row: unset !important;
+    grid-column: unset !important;
+  }
+
+  .hero-text-box {
+    order: 2 !important;
+    padding: 3.2rem 1.6rem !important;
+    text-align: center !important;
+    background-color: white !important;
+    position: relative !important;
+    z-index: 2 !important;
+    grid-row: unset !important;
+    grid-column: unset !important;
+
+    /* iPhone Text Animation */
+    animation: iphoneTextFadeIn 2s ease-out 1.2s both;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+
+  /* iPhone Text Animation Keyframes */
+  @keyframes iphoneTextFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    30% {
+      opacity: 0.3;
+      transform: translateY(25px) scale(0.97);
+    }
+    70% {
+      opacity: 0.8;
+      transform: translateY(10px) scale(0.99);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .heading-primary {
+    font-size: 3.6rem;
+    line-height: 1.05;
+    margin-bottom: 2.4rem;
+  }
+
+  .hero-title-container {
+    text-align: center;
+  }
+
+  .gradient-text {
+    font-size: 3.6rem;
+    display: block;
+    margin: 0.8rem 0;
+  }
+
+  .hero-description {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    margin-bottom: 2.4rem;
+    text-align: center;
+  }
+
+  .hero-description br {
+    display: none;
+  }
+
+  /* iPhone Video-Optimierungen */
+  .hero-img,
+  video.hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    filter: grayscale(20%) !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    aspect-ratio: unset !important;
+
+    /* iPhone Hero Animation */
+    animation:
+      iphoneHeroEntrance 2.5s ease-out forwards,
+      iphoneHeroBreath 8s ease-in-out infinite 2.5s;
+    transform-origin: center center;
+  }
+
+  /* Keyframes für iPhone Hero-Animation */
+  @keyframes iphoneHeroEntrance {
+    0% {
+      transform: scale(1.15) rotate(0.5deg);
+      filter: grayscale(70%) brightness(0.6) contrast(1.2);
+      opacity: 0;
+    }
+    30% {
+      filter: grayscale(50%) brightness(0.75) contrast(1.15);
+      opacity: 0.6;
+    }
+    70% {
+      filter: grayscale(30%) brightness(0.9) contrast(1.05);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      filter: grayscale(20%) brightness(1) contrast(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes iphoneHeroBreath {
+    0%,
+    100% {
+      transform: scale(1) translateY(0) rotate(0deg);
+      filter: grayscale(20%) brightness(1);
+    }
+    25% {
+      transform: scale(1.01) translateY(-5px) rotate(0.2deg);
+      filter: grayscale(15%) brightness(1.05);
+    }
+    50% {
+      transform: scale(1.025) translateY(-8px) rotate(0deg);
+      filter: grayscale(10%) brightness(1.1);
+    }
+    75% {
+      transform: scale(1.01) translateY(-5px) rotate(-0.2deg);
+      filter: grayscale(15%) brightness(1.05);
+    }
+  }
+
+  .hero-overlay {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* iPhone-optimierte Buttons */
+  .btn,
+  .btn:link,
+  .btn:visited {
+    padding: 1.8rem 2.4rem;
+    font-size: 1.6rem;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+    margin-bottom: 1.6rem;
+    min-height: 4.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn--full {
+    width: 100%;
+    margin-bottom: 1.6rem;
+  }
+
+  .btn--outline {
+    width: 100%;
+  }
+
+  /* Delivered Services für iPhone */
+  .delivered-services {
+    margin-top: 3.2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .delivered-imgs {
+    margin-bottom: 1.6rem;
+  }
+
+  .delivered-imgs img {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin: 0 0.4rem;
+  }
+
+  .delivered-text {
+    font-size: 1.4rem;
+  }
+
+  /* iPhone-optimierte Service-Sektion */
+  .grid--3-cols {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  /* Services untereinander für alle mobilen Geräte */
+  .section-service .grid--3-cols {
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  .service {
+    padding: 2.4rem 1.6rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .meal-img {
+    border-radius: 12px;
+    margin-bottom: 1.6rem;
+  }
+
+  .service-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+
+  .service-attributes {
+    gap: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .service-attribute {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .service-icon {
+    height: 2rem !important;
+    width: 2rem !important;
+    color: #b2d8db;
+  }
+
+  .btn-service {
+    width: 100%;
+    text-align: center;
+    padding: 1.6rem;
+    border-radius: 8px;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  /* iPhone-optimierte Testimonials */
+  .testimonials-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    align-items: center;
+  }
+
+  .testimonial-card {
+    width: 100%;
+    max-width: 45rem;
+    padding: 2.4rem 1.6rem;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .testimonial-author-image {
+    margin-bottom: 1.6rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-img {
+    border-radius: 50%;
+    border: 3px solid #b2d8db;
+  }
+
+  .testimonial-text {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    margin-bottom: 1.6rem;
+    font-style: italic;
+    color: #333;
+  }
+
+  .testimonial-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #b2d8db;
+  }
+
+  /* iPhone-optimierte Contact Section */
+  .cta {
+    border-radius: 16px;
+    margin: 2.4rem 1.6rem;
+  }
+
+  .cta-text-box {
+    padding: 2.4rem 1.6rem;
+    text-align: center;
+  }
+
+  .cta-form {
+    gap: 1.6rem;
+  }
+
+  .cta-form input,
+  .cta-form select,
+  .cta-form textarea {
+    padding: 1.4rem;
+    font-size: 1.6rem;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease;
+  }
+
+  .cta-form input:focus,
+  .cta-form select:focus,
+  .cta-form textarea:focus {
+    border-color: #b2d8db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(178, 216, 219, 0.1);
+  }
+
+  /* iPhone-optimierte Gallery */
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    padding: 0 1.6rem;
+  }
+
+  .gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* iPhone-optimierte Features */
+  .step-number {
+    font-size: 6.2rem;
+  }
+
+  .step-description {
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+
+  /* Mobile Navigation für iPhone */
+  .icon-mobile-nav {
+    height: 3.2rem;
+    width: 3.2rem;
+  }
+
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    font-size: 2.4rem;
+    padding: 1.2rem 0;
+  }
+
+  /* Touch-friendly spacing */
+  .main-nav-list {
+    gap: 3.2rem;
+  }
+
+  /* Footer für iPhone */
+  .footer {
+    padding: 4.8rem 1.6rem 2.4rem 1.6rem;
+  }
+
+  .grid--footer {
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+  }
+
+  .footer-heading {
+    font-size: 1.8rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .footer-link:link,
+  .footer-link:visited {
+    font-size: 1.4rem;
   }
 }

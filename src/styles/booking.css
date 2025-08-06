@@ -1433,6 +1433,10 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   }
 
+  .treatment-image {
+    height: 24rem; /* Vergrößert von 20rem auf 24rem für noch bessere mobile Darstellung */
+  }
+
   .time-slots-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -1453,6 +1457,10 @@ body {
 @media screen and (max-width: 576px) {
   .treatments-grid {
     grid-template-columns: 1fr;
+  }
+
+  .treatment-image {
+    height: 26rem; /* Nochmals vergrößert für kleine mobile Geräte */
   }
 
   /* Mobile Progress Bar wird von den neuen Styles in der Hauptsektion gehandhabt */
@@ -1479,6 +1487,10 @@ body {
 }
 
 @media (max-width: 400px) {
+  .treatment-image {
+    height: 28rem; /* Maximale Höhe für sehr kleine Bildschirme */
+  }
+
   .time-slots-grid {
     grid-template-columns: repeat(2, 1fr);
   }

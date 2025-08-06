@@ -479,6 +479,13 @@ export default function AdminPage() {
                   <ion-icon name="time-outline"></ion-icon>
                   Kalender verwalten
                 </Link>
+                <Link
+                  href="/admin/manage-admins"
+                  className="btn btn--secondary admin-manage-link"
+                >
+                  <ion-icon name="people-outline"></ion-icon>
+                  Admin verwalten
+                </Link>
               </div>
             </div>
 

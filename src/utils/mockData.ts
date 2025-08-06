@@ -1,4 +1,4 @@
-import { generateAllTimeSlots } from './timeSlotUtils';
+import { generateAllTimeSlots } from "./timeSlotUtils";
 
 // Die Zeitslots mit 15-Minuten-Intervallen (9:00 Uhr bis 18:00 Uhr)
 export const availableTimeSlots = generateAllTimeSlots().map((time) => ({
@@ -10,92 +10,92 @@ export const availableTimeSlots = generateAllTimeSlots().map((time) => ({
 // Behandlungstypen
 export const treatments = [
   {
-    id: 'browlifting',
-    name: 'Browlifting',
-    category: 'Augenbrauen',
+    id: "browlifting",
+    name: "Browlifting",
+    category: "Augenbrauen",
     description:
-      'Ein Lifting für Ihre Augenbrauen, bei dem wir in mehreren Schritten Ihre Härchen nach oben formen und fixieren. Das Ergebnis sind wundervolle, offene Augen und definierte Augenbrauen für bis zu 8 Wochen!',
+      "Ein Lifting für Ihre Augenbrauen, bei dem wir in mehreren Schritten Ihre Härchen nach oben formen und fixieren. Das Ergebnis sind wundervolle, offene Augen und definierte Augenbrauen für bis zu 8 Wochen!",
     duration: 75, // Dauer in Minuten
-    price: 65,
-    image: '/img/Services/browlifting.jpg',
+    price: 69,
+    image: "/img/Services/browlifting.jpg",
   },
   {
-    id: 'browdesign',
-    name: 'Brow Design',
-    category: 'Augenbrauen',
+    id: "browdesign",
+    name: "Brow Design",
+    category: "Augenbrauen",
     description:
-      'Beim Brow Design werden Ihre Augenbrauen professionell gezupft und in Form gebracht. Wir arbeiten nach den individuellen Gesichtsproportionen für ein perfektes und natürliches Ergebnis.',
+      "Beim Brow Design werden Ihre Augenbrauen professionell gezupft und in Form gebracht. Wir arbeiten nach den individuellen Gesichtsproportionen für ein perfektes und natürliches Ergebnis.",
     duration: 30,
-    price: 25,
-    image: '/img/Services/browdesign.jpg',
+    price: 22,
+    image: "/img/Services/browdesign.jpg",
   },
   {
-    id: 'lashlifting',
-    name: 'Lash Lifting',
-    category: 'Wimpern',
+    id: "lashlifting",
+    name: "Lash Lifting",
+    category: "Wimpern",
     description:
-      'Beim Lash Lifting verwenden wir eine spezielle Technik, um Ihren natürlichen Wimpern mehr Schwung und Länge zu verleihen. Genießen Sie bis zu 8 Wochen lang wunderschön geschwungene Wimpern!',
+      "Beim Lash Lifting verwenden wir eine spezielle Technik, um Ihren natürlichen Wimpern mehr Schwung und Länge zu verleihen. Genießen Sie bis zu 8 Wochen lang wunderschön geschwungene Wimpern!",
     duration: 60,
-    price: 65,
-    image: '/img/Services/lashlifting.jpg',
+    price: 72,
+    image: "/img/Services/lashlifting.JPEG",
   },
   {
-    id: 'lipblush',
-    name: 'LipBlush',
-    category: 'Lippen',
+    id: "lipblush",
+    name: "LipBlush",
+    category: "Lippen",
     description:
-      'Eine semipermanente Pigmentierung der Lippen, die Ihnen voller aussehende, natürlich schöne Lippen verleiht. Die Farbe wird individuell auf Ihren Hautton abgestimmt.',
+      "Eine semipermanente Pigmentierung der Lippen, die Ihnen voller aussehende, natürlich schöne Lippen verleiht. Die Farbe wird individuell auf Ihren Hautton abgestimmt. (2 Behandlungen)",
     duration: 120,
-    price: 350,
-    image: '/img/Services/lipblush.jpg',
+    price: 499,
+    image: "/img/Services/lipblush.jpg",
   },
   {
-    id: 'microblading',
-    name: 'Microblading',
-    category: 'Augenbrauen',
+    id: "microblading",
+    name: "Microblading",
+    category: "Augenbrauen",
     description:
-      'Microblading ist eine semipermanente Pigmentierungstechnik, bei der mit feinen Nadeln haardünne Striche in die Haut gezeichnet werden. Die Augenbrauen wirken natürlich, definiert und ausdrucksstark.',
+      "Microblading ist eine semipermanente Pigmentierungstechnik, bei der mit feinen Nadeln haardünne Striche in die Haut gezeichnet werden. Die Augenbrauen wirken natürlich, definiert und ausdrucksstark. (2 Behandlungen)",
     duration: 120,
-    price: 350,
-    image: '/img/Services/microblading.jpg',
+    price: 499,
+    image: "/img/Services/microblading.JPEG",
   },
   {
-    id: 'eyeliner',
-    name: 'Eyeliner',
-    category: 'Augen',
+    id: "eyeliner",
+    name: "Eyeliner",
+    category: "Augen",
     description:
-      'Permanenter Eyeliner für einen dauerhaft definierten Blick. Der Farbverlauf wird individuell an Ihre Augenform angepasst und betont auf natürliche Weise Ihre Augen.',
+      "Permanenter Eyeliner für einen dauerhaft definierten Blick. Der Farbverlauf wird individuell an Ihre Augenform angepasst und betont auf natürliche Weise Ihre Augen. (2 Behandlungen)",
     duration: 120,
-    price: 350,
-    image: '/img/Services/eyeliner.jpg',
+    price: 449,
+    image: "/img/Services/eyeliner.JPEG",
   },
   {
-    id: 'microneedling',
-    name: 'Microneedling',
-    category: 'Haut',
+    id: "microneedling",
+    name: "Microneedling",
+    category: "Haut",
     description:
-      'Microneedling ist ein Verfahren, bei dem kleine Nadeln die Haut oberflächlich perforieren, um die Kollagenproduktion anzuregen. Dadurch wird die Hautstruktur verbessert und Falten reduziert.',
+      "Microneedling ist ein Verfahren, bei dem kleine Nadeln die Haut oberflächlich perforieren, um die Kollagenproduktion anzuregen. Dadurch wird die Hautstruktur verbessert und Falten reduziert.",
     duration: 60,
     price: 149,
-    image: '/img/Services/microneedeling.jpg',
+    image: "/img/Services/microneedeling.jpg",
   },
 ];
 
 // Kategorie-Labels
 export const categoryLabels = {
-  Augenbrauen: 'Augenbrauen',
-  Wimpern: 'Wimpern',
-  Lippen: 'Lippen',
-  Augen: 'Augen',
-  Haut: 'Haut',
+  Augenbrauen: "Augenbrauen",
+  Wimpern: "Wimpern",
+  Lippen: "Lippen",
+  Augen: "Augen",
+  Haut: "Haut",
 };
 
 // Beispiel für fiktive, bereits gebuchte Termine
 export const mockBookedSlots = [
-  { date: '2023-12-10', time: '10:00', duration: 75 },
-  { date: '2023-12-10', time: '14:30', duration: 120 },
-  { date: '2023-12-11', time: '11:15', duration: 60 },
-  { date: '2023-12-12', time: '09:00', duration: 120 },
+  { date: "2023-12-10", time: "10:00", duration: 75 },
+  { date: "2023-12-10", time: "14:30", duration: 120 },
+  { date: "2023-12-11", time: "11:15", duration: 60 },
+  { date: "2023-12-12", time: "09:00", duration: 120 },
 ];
 
 // Simuliere die Verfügbarkeitsprüfung mit bereits gebuchten Terminen
@@ -125,7 +125,7 @@ export const checkTimeSlotAvailability = (
 
 // Hilfsfunktion zum Konvertieren einer Zeitstring in Minuten
 function timeToMinutes(time: string): number {
-  const [hours, minutes] = time.split(':').map(Number);
+  const [hours, minutes] = time.split(":").map(Number);
   return hours * 60 + minutes;
 }
 
@@ -148,7 +148,7 @@ interface BookingData {
   price: number;
   duration: number;
   message?: string;
-  status?: 'pending' | 'confirmed' | 'cancelled';
+  status?: "pending" | "confirmed" | "cancelled";
   createdAt?: Date;
 }
 
@@ -160,7 +160,7 @@ export const saveBooking = async (
   try {
     // Firebase ist nicht in dieser Entwicklungsumgebung verfügbar, simulieren wir die Anfrage
     // In einer echten Produktionsumgebung würde hier der Aufruf an bookingService erfolgen
-    console.log('Simuliere Buchungsspeicherung mit Daten:', bookingData);
+    console.log("Simuliere Buchungsspeicherung mit Daten:", bookingData);
 
     // Simuliere eine Verzögerung von 1 Sekunde
     return new Promise((resolve) => {
@@ -184,7 +184,7 @@ export const saveBooking = async (
           resolve({
             success: false,
             error:
-              'Der ausgewählte Termin ist nicht mehr verfügbar. Bitte wählen Sie einen anderen Termin.',
+              "Der ausgewählte Termin ist nicht mehr verfügbar. Bitte wählen Sie einen anderen Termin.",
           });
         }
       }, 1000);
@@ -192,7 +192,7 @@ export const saveBooking = async (
   } catch (error) {
     return {
       success: false,
-      error: 'Ein unerwarteter Fehler ist aufgetreten.',
+      error: "Ein unerwarteter Fehler ist aufgetreten.",
     };
   }
 };

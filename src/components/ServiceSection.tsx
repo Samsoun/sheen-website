@@ -20,8 +20,8 @@ const ServiceSection = ({ onOpenModal }: ServiceSectionProps) => {
       id: "browlifting",
       title: "Browlifting",
       image: "/img/Services/browlifting.jpg",
-      duration: "75 min",
-      price: "79",
+      duration: "60 min",
+      price: "69",
       description:
         "Browlifting is an innovative treatment that shapes your natural eyebrows and adds more volume. The treatment gently lifts the eyebrows and fixes them in the desired position. The result is a fresh, open look that lasts up to 6-8 weeks.",
     },
@@ -39,7 +39,7 @@ const ServiceSection = ({ onOpenModal }: ServiceSectionProps) => {
       title: "Lash Lifting",
       image: "/img/Services/lashlifting.JPEG",
       duration: "60 min",
-      price: "69",
+      price: "72",
       description:
         "Lash Lifting is a gentle method to give your natural lashes a dramatic curl. The treatment lifts the lashes from the root and provides an open, expressive look. The result lasts 6-8 weeks.",
     },
@@ -48,27 +48,27 @@ const ServiceSection = ({ onOpenModal }: ServiceSectionProps) => {
       title: "LipBlush",
       image: "/img/Services/lipblush.jpg",
       duration: "180 min",
-      price: "399",
+      price: "499",
       description:
-        "LipBlush is a semi-permanent lip color that gives your lips a natural, even color and definition. The treatment can also balance minor asymmetries and make your lips appear fuller.",
+        "LipBlush is a semi-permanent lip color that gives your lips a natural, even color and definition. The treatment can also balance minor asymmetries and make your lips appear fuller. (2 treatments)",
     },
     {
       id: "microblading",
       title: "Microblading",
       image: "/img/Services/microblading.JPEG",
       duration: "180 min",
-      price: "349",
+      price: "499",
       description:
-        "Microblading is a precise technique for natural-looking eyebrows. Using a special blade, fine hair strokes are drawn into the top layer of skin. The result is defined, natural-looking eyebrows that last 1-3 years.",
+        "Microblading is a precise technique for natural-looking eyebrows. Using a special blade, fine hair strokes are drawn into the top layer of skin. The result is defined, natural-looking eyebrows that last 1-3 years. (2 treatments)",
     },
     {
       id: "eyeliner",
       title: "Eyeliner",
       image: "/img/Services/eyeliner.JPEG",
       duration: "180 min",
-      price: "349",
+      price: "449",
       description:
-        "Permanent Eyeliner emphasizes your eyes in a subtle or dramatic way - according to your preferences. The pigmentation is precisely worked along the lash line and lasts 3-5 years.",
+        "Permanent Eyeliner emphasizes your eyes in a subtle or dramatic way - according to your preferences. The pigmentation is precisely worked along the lash line and lasts 3-5 years. (2 treatments)",
     },
     {
       id: "microneedling",

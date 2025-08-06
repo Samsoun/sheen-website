@@ -1,20 +1,20 @@
 {
   "app/booking/page.tsx -> @/utils/firebase-config": {
-    "id": 6108,
+    "id": "app/booking/page.tsx -> @/utils/firebase-config",
     "files": []
   },
   "app/booking/page.tsx -> firebase/firestore": {
-    "id": 5978,
+    "id": "app/booking/page.tsx -> firebase/firestore",
     "files": []
   },
   "components/DateTimeSelection.tsx -> @/utils/calendarBlockingService": {
-    "id": 3608,
+    "id": "components/DateTimeSelection.tsx -> @/utils/calendarBlockingService",
     "files": []
   },
   "utils/emailService.ts -> @emailjs/browser": {
-    "id": 6595,
+    "id": "utils/emailService.ts -> @emailjs/browser",
     "files": [
-      "static/chunks/595.e73eef9635841396.js"
+      "static/chunks/_app-pages-browser_node_modules_emailjs_browser_es_index_js.js"
     ]
   }
 }

@@ -58,10 +58,11 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
-  // Schließe das Dropdown-Menü, wenn außerhalb geklickt wird
+  // Schließe das Dropdown-Menü, wenn außerhalb geklickt wird (nur wenn mobile Navigation geschlossen ist)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
+        !mobileNavOpen &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -73,7 +74,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [mobileNavOpen]);
 
   // Schließe die mobile Navigation beim Scrollen
   useEffect(() => {
@@ -94,53 +95,30 @@ const Header = () => {
     };
   }, [mobileNavOpen, showDropdown]);
 
-  // Implementiere die Sticky-Navigation-Funktionalität
+  // Mobile Navigation sollte beim Klicken auf Links schließen (außer Dropdown-Button)
   useEffect(() => {
-    const featuredSection = document.querySelector(".section-featured");
-
-    if (!featuredSection) {
-      // Für Admin-Seiten oder andere Seiten ohne Featured-Sektion
-      // Verwende eine alternative Referenz oder deaktiviere Sticky Navigation
-
-      // Einfache Sticky Navigation basierend auf Scroll-Position
-      const checkScroll = () => {
-        if (window.scrollY > 100) {
-          document.body.classList.add("sticky");
-        } else {
-          document.body.classList.remove("sticky");
-        }
-      };
-
-      window.addEventListener("scroll", checkScroll);
-
-      // Cleanup
-      return () => {
-        window.removeEventListener("scroll", checkScroll);
-      };
-    }
-
-    // Funktion zum Überprüfen der Scroll-Position
-    const checkScroll = () => {
-      const featuredRect = featuredSection.getBoundingClientRect();
-
-      if (featuredRect.top <= 0) {
-        document.body.classList.add("sticky");
-      } else {
-        document.body.classList.remove("sticky");
+    const handleLinkClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      // Nicht schließen wenn es der Dropdown-Button oder ein Dropdown-Element ist
+      if (target.closest(".relative") && !target.closest("a[href]")) {
+        return;
+      }
+      if (mobileNavOpen && target.closest("a[href]")) {
+        setMobileNavOpen(false);
       }
     };
 
-    // Initialer Check
-    checkScroll();
+    const navLinks = document.querySelectorAll(".main-nav-link, .main-nav a");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", handleLinkClick);
+    });
 
-    // Event-Listener für Scroll
-    window.addEventListener("scroll", checkScroll);
-
-    // Cleanup
     return () => {
-      window.removeEventListener("scroll", checkScroll);
+      navLinks.forEach((link) => {
+        link.removeEventListener("click", handleLinkClick);
+      });
     };
-  }, []);
+  }, [mobileNavOpen]);
 
   return (
     <header
@@ -153,9 +131,9 @@ const Header = () => {
             className="logo"
             alt="Sheen logo"
             src="/img/logo_sheen.png"
-            width={120}
-            height={40}
-            style={{ width: "auto", height: "auto" }}
+            width={80}
+            height={35}
+            style={{ width: "auto", height: "auto", maxHeight: "5rem" }}
           />
         </Link>
         <a
@@ -221,10 +199,19 @@ const Header = () => {
             {isLoggedIn ? (
               <div className="relative" ref={dropdownRef}>
                 <button
-                  onClick={() => setShowDropdown(!showDropdown)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(
+                      "Profile dropdown clicked, current state:",
+                      showDropdown
+                    );
+                    setShowDropdown(!showDropdown);
+                  }}
                   className="flex items-center main-nav-link"
                   aria-haspopup="true"
                   aria-expanded={showDropdown}
+                  type="button"
                 >
                   {userAvatar ? (
                     <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
@@ -252,7 +239,7 @@ const Header = () => {
                       />
                     </svg>
                   )}
-                  <span className="hidden md:inline-block">{userName}</span>
+                  <span className="md:inline-block">{userName}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className={`h-4 w-4 ml-1 transition-transform ${
@@ -280,7 +267,10 @@ const Header = () => {
                       <Link
                         href="/profile"
                         className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
-                        onClick={() => setShowDropdown(false)}
+                        onClick={() => {
+                          setShowDropdown(false);
+                          setMobileNavOpen(false);
+                        }}
                       >
                         Mein Profil
                       </Link>
@@ -289,7 +279,10 @@ const Header = () => {
                         <Link
                           href="/admin"
                           className="block px-4 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-50"
-                          onClick={() => setShowDropdown(false)}
+                          onClick={() => {
+                            setShowDropdown(false);
+                            setMobileNavOpen(false);
+                          }}
                         >
                           Admin-Dashboard
                         </Link>
@@ -298,7 +291,10 @@ const Header = () => {
                       <Link
                         href="/logout"
                         className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
-                        onClick={() => setShowDropdown(false)}
+                        onClick={() => {
+                          setShowDropdown(false);
+                          setMobileNavOpen(false);
+                        }}
                       >
                         Abmelden
                       </Link>
@@ -349,7 +345,18 @@ const Header = () => {
 
       <button
         className="btn-mobile-nav"
-        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log(
+            "Mobile nav button clicked, current state:",
+            mobileNavOpen
+          );
+          setMobileNavOpen(!mobileNavOpen);
+        }}
+        type="button"
+        aria-label="Mobile Navigation Toggle"
+        aria-expanded={mobileNavOpen}
       >
         <ion-icon
           className="icon-mobile-nav"

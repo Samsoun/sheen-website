@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   title: "Sheen — Smile through eyes",
   description:
     "Sheen is your go-to cosmetic studio for expert microblading and eyelashing services. Enhance your natural beauty and let your eyes shine with confidence. Book your appointment today!",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    viewportFit: "cover",
+  },
+  themeColor: "#b2d8db",
+  colorScheme: "light",
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({

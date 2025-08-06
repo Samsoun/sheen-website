@@ -8,10 +8,14 @@
   align-items: center;
   background-color: #e8f3f4;
 
-  /* because we want the header to be sticky later */
+  /* Fixed position for mobile */
   height: 9.6rem;
   padding: 0 4.8rem;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
 
   /* Füge Transition-Eigenschaften zur normalen Navigation hinzu */
   transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -27,7 +31,8 @@
 
 .logo {
   height: auto;
-  width: 120px;
+  width: 80px;
+  max-height: 5rem;
   object-fit: contain;
 }
 
@@ -92,22 +97,32 @@
 }
 
 .icon-mobile-nav {
-  height: 4.8rem;
-  width: 4.8rem;
-  color: #333;
+  height: 4.8rem !important;
+  width: 4.8rem !important;
+  color: #333 !important;
+  transition: all 0.3s ease !important;
+  pointer-events: none !important;
 }
 
 .icon-mobile-nav[name="close-outline"] {
-  display: none;
+  display: none !important;
 }
 
 /* When nav is opened, show the close icon and hide the menu icon */
 .nav-open .icon-mobile-nav[name="close-outline"] {
-  display: block;
+  display: block !important;
 }
 
 .nav-open .icon-mobile-nav[name="menu-outline"] {
-  display: none;
+  display: none !important;
+}
+
+/* Bessere Icon-Darstellung */
+@media (max-width: 34em) {
+  .icon-mobile-nav {
+    height: 3.6rem !important;
+    width: 3.6rem !important;
+  }
 }
 
 /* Media queries for responsive header and navigation */
@@ -125,51 +140,180 @@
   .header {
     height: 8rem;
     padding: 0 2.4rem;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 10001 !important;
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .logo {
     height: auto;
-    width: 100px;
+    width: 70px;
+    max-height: 4rem;
   }
 
   .btn-mobile-nav {
-    display: block;
-    z-index: 1000;
+    display: block !important;
+    z-index: 10000 !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    transition: background-color 0.3s ease !important;
+  }
+
+  .btn-mobile-nav:hover {
+    background-color: rgba(178, 216, 219, 0.1) !important;
   }
 
   .main-nav {
-    background-color: #e8f3f4;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    transform: translateX(100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.5s ease-in;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    z-index: 999;
+    background-color: rgba(232, 243, 244, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    transform: translateX(100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    z-index: 9999 !important;
   }
 
   .nav-open .main-nav {
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
-    transform: translateX(0);
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    transform: translateX(0) !important;
   }
 
   .main-nav-list {
-    flex-direction: column;
-    gap: 4.8rem;
+    flex-direction: column !important;
+    gap: 4.8rem !important;
+    padding: 2rem !important;
+    text-align: center !important;
   }
 
   .main-nav-link:link,
   .main-nav-link:visited {
-    font-size: 3rem;
+    font-size: 3rem !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    display: block !important;
+  }
+
+  .main-nav-link:hover,
+  .main-nav-link:active {
+    background-color: rgba(178, 216, 219, 0.2) !important;
+    color: #b2d8db !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .main-nav-link.nav-cta {
+    background-color: #b2d8db !important;
+    color: white !important;
+    font-weight: 600 !important;
+  }
+
+  .main-nav-link.nav-cta:hover {
+    background-color: #7d9799 !important;
+    color: white !important;
+  }
+
+  /* Mobile Profil-Dropdown Styling */
+  .main-nav .relative {
+    position: relative !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .main-nav .relative .absolute {
+    position: relative !important;
+    right: auto !important;
+    margin-top: 1rem !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-radius: 12px !important;
+    border: 2px solid rgba(178, 216, 219, 0.3) !important;
+    z-index: 10001 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .main-nav .relative .absolute .py-1 {
+    padding: 1rem !important;
+  }
+
+  .main-nav .relative .absolute a {
+    padding: 1.2rem 1.6rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 0.8rem !important;
+    display: block !important;
+    font-size: 2.4rem !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .main-nav .relative .absolute a:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .main-nav .relative .absolute a:hover {
+    background-color: rgba(178, 216, 219, 0.2) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Mobile Profile Button Styling */
+  .main-nav .relative button {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 12px !important;
+    background: none !important;
+    border: none !important;
+    color: #333 !important;
+    font-size: 3rem !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .main-nav .relative button:hover {
+    background-color: rgba(178, 216, 219, 0.2) !important;
+    color: #b2d8db !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .main-nav .relative button .w-8 {
+    width: 3rem !important;
+    height: 3rem !important;
+    margin-right: 1rem !important;
+  }
+
+  .main-nav .relative button .h-4 {
+    width: 2rem !important;
+    height: 2rem !important;
+    margin-left: 1rem !important;
   }
 
   .hero-slide:first-child {
@@ -336,7 +480,21 @@
 
 /* Body-Transition für einen sanften Übergang zur Sticky-Navigation */
 body {
+  padding-top: 9.6rem; /* Standard Header-Höhe */
   transition: padding-top 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Mobile padding adjustments */
+@media (max-width: 59em) {
+  body {
+    padding-top: 8rem !important;
+  }
+}
+
+@media (max-width: 34em) {
+  body {
+    padding-top: 8rem !important;
+  }
 }
 
 body.sticky {
@@ -698,6 +856,114 @@ video.hero-img {
   }
 }
 
+/* iPhone-spezifische Optimierungen */
+@media (max-width: 425px) {
+  /* Touch-friendly gestures */
+  .service,
+  .testimonial,
+  .btn,
+  .btn-service {
+    -webkit-tap-highlight-color: rgba(178, 216, 219, 0.3);
+    touch-action: manipulation;
+  }
+
+  /* Verbesserte Lesbarkeit */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  /* Optimierte Hero-Section für iPhone */
+  .hero-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .title-left,
+  .title-right {
+    font-size: 3.2rem;
+    text-align: center;
+  }
+
+  .title-middle {
+    text-align: center;
+  }
+
+  /* Modal-Optimierungen für iPhone */
+  .service-modal {
+    width: 90%;
+    max-width: none;
+    margin: 2rem;
+    border-radius: 16px;
+    padding: 2.4rem;
+  }
+
+  .modal-title {
+    font-size: 2.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .modal-description {
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+
+  .close-modal {
+    font-size: 3.2rem;
+    top: 1rem;
+    right: 1.6rem;
+  }
+
+  /* Verbesserte Button-States */
+  .btn:hover,
+  .btn:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Safe Area für iPhone mit Notch */
+  .header {
+    padding-top: max(1.6rem, env(safe-area-inset-top));
+    padding-left: max(1.6rem, env(safe-area-inset-left));
+    padding-right: max(1.6rem, env(safe-area-inset-right));
+  }
+
+  .section-hero {
+    padding-top: max(1.6rem, env(safe-area-inset-top));
+  }
+
+  /* Optimierte Scroll-Performance */
+  .hero-img-box,
+  .service,
+  .testimonial {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Touch-scrolling optimieren */
+  .main-nav {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Focus States für bessere Accessibility */
+  .btn:focus,
+  .main-nav-link:focus,
+  .cta-form input:focus,
+  .cta-form select:focus,
+  .cta-form textarea:focus {
+    outline: 2px solid #b2d8db;
+    outline-offset: 2px;
+  }
+}
+
 /* Hero-Layout für Desktop und große Tablets */
 @media (min-width: 59em) {
   .hero-slide:first-child,
@@ -741,31 +1007,84 @@ video.hero-img {
 
 @media (max-width: 34em) {
   .section-hero {
-    padding: 3.2rem 0 3.2rem 0;
-    margin-top: 3.2rem;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hero-static {
+    height: auto;
+  }
+
+  .hero-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    align-items: stretch !important;
+    height: auto !important;
+    grid-template-columns: none !important;
   }
 
   .hero-slide:first-child {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 0 1.6rem;
-    align-items: center;
-  }
-
-  .hero-text-box {
-    padding: 0;
-    text-align: center;
-    order: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    align-items: stretch !important;
+    height: auto !important;
+    grid-template-columns: none !important;
   }
 
   .hero-img-box {
-    min-height: unset;
-    max-width: 100%;
-    margin: 0;
-    overflow: visible;
-    max-height: 70vh;
-    order: 2;
+    order: 1 !important;
+    height: 100vh !important;
+    height: 100dvh !important; /* Dynamic viewport height für mobile Browser */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    grid-row: unset !important;
+    grid-column: unset !important;
+  }
+
+  .hero-text-box {
+    order: 2 !important;
+    padding: 4.8rem 2.4rem !important;
+    text-align: center !important;
+    background-color: white !important;
+    position: relative !important;
+    z-index: 2 !important;
+    grid-row: unset !important;
+    grid-column: unset !important;
+
+    /* Text Animation */
+    animation: mobileTextSlideUp 1.5s ease-out 1s both;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* Text Animation Keyframes */
+  @keyframes mobileTextSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .heading-primary {
@@ -778,14 +1097,53 @@ video.hero-img {
     margin-bottom: 3.2rem;
   }
 
+  .hero-img,
   video.hero-img {
-    width: 100%;
-    height: auto;
-    max-height: 45vh;
-    border-radius: 6px;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    border-radius: 0 !important;
     filter: grayscale(20%) !important;
-    object-fit: contain;
-    max-height: none;
+    object-fit: cover !important;
+    object-position: center !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    aspect-ratio: unset !important;
+
+    /* Mobile Hero Animation */
+    animation:
+      mobileHeroEntrance 2s ease-out forwards,
+      mobileHeroFloat 6s ease-in-out infinite 2s;
+    transform-origin: center center;
+  }
+
+  /* Keyframes für mobile Hero-Animation */
+  @keyframes mobileHeroEntrance {
+    0% {
+      transform: scale(1.1);
+      filter: grayscale(60%) brightness(0.7);
+      opacity: 0;
+    }
+    50% {
+      filter: grayscale(40%) brightness(0.85);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      filter: grayscale(20%) brightness(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes mobileHeroFloat {
+    0%,
+    100% {
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      transform: scale(1.02) translateY(-10px);
+    }
   }
 
   .hero-overlay {
@@ -3629,6 +3987,7 @@ p.step-number {
   display: inline-block;
   background: linear-gradient(90deg, #f06292, #7c4dff, #2196f3);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   animation: colorShift 3s infinite;
   text-transform: uppercase;

@@ -1,18 +1,9 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/admin/calendar/page": "app/admin/calendar/page.js",
-  "/admin/bookings/page": "app/admin/bookings/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/admin/setup/page": "app/admin/setup/page.js",
-  "/datenschutz/page": "app/datenschutz/page.js",
-  "/impressum/page": "app/impressum/page.js",
-  "/login/page": "app/login/page.js",
-  "/logout/page": "app/logout/page.js",
-  "/profile/page": "app/profile/page.js",
-  "/register/page": "app/register/page.js",
   "/page": "app/page.js",
-  "/test-email/page": "app/test-email/page.js",
-  "/reset-password/page": "app/reset-password/page.js",
-  "/maps/page": "app/maps/page.js",
-  "/booking/page": "app/booking/page.js"
+  "/profile/page": "app/profile/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/manage-admins/page": "app/admin/manage-admins/page.js",
+  "/logout/page": "app/logout/page.js",
+  "/login/page": "app/login/page.js",
+  "/register/page": "app/register/page.js"
 }
