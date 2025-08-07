@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sheen Beauty Studio - Location</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .map-container {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #b2d8db;
+        color: white;
+        text-decoration: none;
+        border-radius: 9px;
+        font-family: "Rubik", sans-serif;
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+
+      .back-button:hover {
+        background-color: #7d9799;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="map-container">
+      <a href="index.html" class="back-button">← Back to Home</a>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.3086011681584!2d13.325439776939611!3d52.49984397205493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a850e76f7a6b2d%3A0x9f83c2428c7439ce!2sKurf%C3%BCrstendamm%20180%2C%2010707%20Berlin!5e0!3m2!1sen!2sde!4v1709728391027!5m2!1sen!2sde"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Sheen is your go-to cosmetic studio for expert microblading and eyelashing services. Enhance your natural beauty and let your eyes shine with confidence. Book your appointment today!"
+    />
+    <link rel="icon" href="img/Icon_sheen.png" />
+    <link rel="apple-touch-icon" href="img/Icon_sheen.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/queries.css" />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"
+    ></script>
+    <script defer src="js/script.js"></script>
+
+    <title>Sheen &mdash; Smile through eyes</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <a href="index.html">
+          <img class="logo" alt="Sheen logo" src="img/logo_sheen.png" />
+        </a>
+        <a
+          href="https://www.instagram.com/sheen_beautystudio/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="social-icon-nav"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.facebook.com/sheen.brows"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="social-icon-nav"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
+            />
+          </svg>
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li><a class="main-nav-link" href="#app">Sheen App</a></li>
+          <li><a class="main-nav-link" href="#pics">Pictures</a></li>
+          <li><a class="main-nav-link" href="#service">Services</a></li>
+          <li>
+            <a class="main-nav-link" href="#testimonials">Testimonials</a>
+          </li>
+          <li>
+            <a class="main-nav-link" href="slider.html">Elegance</a>
+          </li>
+          <li><a class="main-nav-link" href="#cta">Contact</a></li>
+          <li>
+            <a class="main-nav-link nav-cta" href="booking.html">Book now</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="btn-mobile-nav">
+        <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+        <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+      </button>
+    </header>
+    <main>
+      <section class="section section-hero">
+        <div class="hero-slider">
+          <!-- Slide 1 - Mobile-optimiert -->
+          <div class="hero-slide active">
+            <div class="hero-text-box">
+              <h1 class="heading-primary">
+                <div class="hero-title-container">
+                  <span class="title-left">Enhance your</span>
+                  <div class="title-middle">
+                    <span class="gradient-text">natural beauty</span>
+                  </div>
+                  <span class="title-right">with Sheen</span>
+                </div>
+              </h1>
+              <p class="hero-description">
+                Let your eyes shine with confidence and tell your story.
+                <br />Book your appointment now and let your eyes shine with
+                confidence!
+              </p>
+              <a href="booking.html" class="btn btn--full margin-right-sm">
+                Book Now</a
+              >
+              <a href="#service" class="btn btn--outline">Learn more &darr;</a>
+
+              <div class="delivered-services">
+                <div class="delivered-imgs">
+                  <img
+                    src="img/customers/customer-1.jpg"
+                    alt="customer photo"
+                  />
+                  <img src="img/customers/human-1.jpg" alt="customer photo" />
+                  <img
+                    src="img/customers/customer-3.jpg"
+                    alt="customer photo"
+                  />
+                  <img src="img/customers/human-2.jpg" alt="customer photo" />
+                  <img
+                    src="img/customers/customer-5.jpg"
+                    alt="customer photo"
+                  />
+                  <img
+                    src="img/customers/customer-6.jpg"
+                    alt="customer photo"
+                  />
+                </div>
+                <p class="delivered-text">
+                  <span>500+</span> beautified last year!
+                </p>
+              </div>
+            </div>
+
+            <!-- Optimiertes Video-Element für alle Geräte -->
+            <div class="hero-img-box">
+              <video
+                class="hero-img"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                poster="img/hero.jpg"
+                style="
+                  filter: grayscale(50%);
+                  background: transparent;
+                  aspect-ratio: 16/9;
+                  object-fit: cover;
+                  width: 100%;
+                "
+                id="hero-video"
+              >
+                <source src="img/heromov.mp4" type="video/mp4" />
+              </video>
+              <img
+                src="img/hero.jpg"
+                class="hero-img hero-fallback-img"
+                alt="beautiful woman with astonishing eyes"
+                style="
+                  filter: grayscale(0%);
+                  display: none;
+                  aspect-ratio: 16/9;
+                  object-fit: cover;
+                  width: 100%;
+                "
+              />
+              <div class="hero-overlay"></div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="hero-slide">
+            <div class="hero-img-box">
+              <img
+                src="img/hero2.jpg"
+                class="hero-img"
+                alt="beautiful woman with perfect makeup"
+                style="filter: grayscale(0%)"
+              />
+            </div>
+
+            <div class="hero-promo-tag">
+              New in the Studio! Your must-have is here!
+            </div>
+
+            <div class="hero-overlay"></div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hero-slide">
+            <div class="hero-img-box">
+              <img
+                src="img/hero3.jpg"
+                class="hero-img"
+                alt="woman with perfect eyebrows"
+                style="filter: grayscale(0%)"
+              />
+            </div>
+
+            <div class="hero-promo-tag">Now available in our Studio!</div>
+
+            <div class="hero-overlay"></div>
+          </div>
+
+          <!-- Navigation Dots -->
+          <div class="hero-dots">
+            <span class="hero-dot active"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEAUTURED IN SECTION -->
+      <section class="section-featured">
+        <div class="container">
+          <h2 class="heading-featured-in">As featured in</h2>
+          <div class="logos">
+            <img src="img/logos/treatwell.png" alt="techcrunch logo" />
+            <img src="img/logos/google.png" alt="Business Insider logo" />
+          </div>
+        </div>
+      </section>
+      <!-- SECTION HOW -->
+      <section class="section section-how" id="app">
+        <div class="container">
+          <span class="subheading"
+            >NEW! Our App is here!
+            <span class="new-tag">NOW AVAILABLE</span></span
+          >
+          <h2 class="heading-secondary">
+            Download Our App and Book with Ease!
+          </h2>
+          <div class="app-download-container">
+            <p class="app-description">
+              Our brand new app is now available! Book your appointments quickly
+              and easily, receive exclusive offers, and stay informed about the
+              latest trends - all in one app.
+            </p>
+            <div class="download-buttons">
+              <div class="download-option">
+                <a
+                  href="https://apps.apple.com/de/app/sheen-mobile-app/id6741106276?l=en-GB"
+                  target="_blank"
+                  class="download-btn app-store"
+                >
+                  <ion-icon name="logo-apple"></ion-icon>
+                  <span>
+                    <small>Download on</small>
+                    <strong>App Store</strong>
+                  </span>
+                </a>
+                <div class="qr-container">
+                  <img
+                    src="img/app/iosqr.png"
+                    alt="iOS App QR Code"
+                    class="qr-code"
+                  />
+                  <p class="qr-text">Scan for iOS App</p>
+                </div>
+              </div>
+              <div class="download-option">
+                <a href="#" class="download-btn play-store">
+                  <ion-icon name="logo-google-playstore"></ion-icon>
+                  <span>
+                    <small>Get it on</small>
+                    <strong>Google Play</strong>
+                  </span>
+                </a>
+                <p class="coming-soon-text">Coming Soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container grid grid--2-cols grid--center-v">
+          <!-- STEP 01 -->
+          <div class="step-text-box">
+            <p class="step-number">01</p>
+
+            <h3 class="heading-tertiary">Find Your Perfect Treatment</h3>
+
+            <p class="step-description">
+              Browse our extensive range of beauty treatments, from permanent
+              makeup to skincare. Choose the treatment that best suits your
+              needs.
+            </p>
+          </div>
+          <div class="step-img-box">
+            <img
+              src="img/app/sheenapp1.png"
+              class="step-img"
+              alt="iphone app sheen app home screen"
+            />
+          </div>
+
+          <!-- STEP 02 -->
+          <div class="step-img-box">
+            <img
+              src="img/app/sheenapp3.png"
+              class="step-img"
+              alt="iphone app sheen app treatment screen"
+            />
+          </div>
+          <div class="step-text-box">
+            <p class="step-number">02</p>
+
+            <h3 class="heading-tertiary">Select Your Perfect Match</h3>
+
+            <p class="step-description">
+              Explore the diverse treatment menu and find what excites you. Tap
+              on a treatment to learn more about it and view available
+              appointment times.
+            </p>
+          </div>
+          <!-- STEP 03 -->
+          <div class="step-text-box">
+            <p class="step-number">03</p>
+
+            <h3 class="heading-tertiary">Book with Ease</h3>
+
+            <p class="step-description">
+              Once you've chosen your treatment, select a date and time that
+              suits you best from the available slots. Booking is quick and
+              easy, so you can secure your beauty appointment in moments.
+            </p>
+          </div>
+
+          <div class="step-img-box">
+            <img
+              src="img/app/sheenapp2.png"
+              class="step-img"
+              alt="iphone app sheen app booking calender"
+            />
+          </div>
+        </div>
+      </section>
+      <!-- PICTURES SECTION -->
+      <section class="section section-pics" id="pics">
+        <div class="container center-text">
+          <span class="subheading">Pictures</span>
+          <h2 class="heading-secondary">Our Gallery</h2>
+        </div>
+        <div class="carousel">
+          <div class="carousel-container">
+            <div class="carousel-item" data-index="0">
+              <img src="img/gallery/auge.jpg" alt="Photo 1" />
+            </div>
+            <div class="carousel-item" data-index="1">
+              <img src="img/gallery/auge1.jpg" alt="Photo 2" />
+            </div>
+            <div class="carousel-item" data-index="2">
+              <img src="img/gallery/augemessen.jpg" alt="Photo 3" />
+            </div>
+            <div class="carousel-item" data-index="3">
+              <img src="img/gallery/augenbraue1.jpg" alt="Photo 4" />
+            </div>
+            <div class="carousel-item" data-index="4">
+              <img src="img/gallery/augenbraue2.jpg" alt="Photo 5" />
+            </div>
+            <div class="carousel-item" data-index="5">
+              <img src="img/gallery/augenbraue3.jpg" alt="Photo 6" />
+            </div>
+            <div class="carousel-item" data-index="6">
+              <img src="img/gallery/eyelash.jpg" alt="Photo 7" />
+            </div>
+            <div class="carousel-item" data-index="7">
+              <img src="img/gallery/eyelash2.jpg" alt="Photo 8" />
+            </div>
+            <div class="carousel-item" data-index="8">
+              <img src="img/gallery/eyelash3.jpg" alt="Photo 9" />
+            </div>
+            <div class="carousel-item" data-index="9">
+              <img src="img/gallery/lash4.jpg" alt="Photo 10" />
+            </div>
+            <div class="carousel-item" data-index="10">
+              <img src="img/gallery/lippe2.jpg" alt="Photo 11" />
+            </div>
+            <div class="carousel-item" data-index="11">
+              <img src="img/gallery/lippe1.jpg" alt="Photo 12" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- SERVICE SECTION -->
+      <section class="section section-service" id="service">
+        <div class="container center-text">
+          <span class="subheading">Services</span>
+          <h2 class="heading-secondary">
+            Smile Through Eyes with Our Signature Services
+          </h2>
+        </div>
+        <div class="container grid grid--3-cols margin-right-md">
+          <div class="service">
+            <img
+              src="img/Services/browlifting.jpg"
+              class="meal-img"
+              alt="Japanese Gyozas"
+            />
+            <div class="service-content">
+              <p class="service-title">Browlifting</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span
+                    class="service-description-link"
+                    data-service="browlifting"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration:: <strong>75 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 79</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/browdesign.jpg"
+              class="meal-img"
+              alt="Brow Design Service"
+            />
+            <div class="service-content">
+              <p class="service-title">Brow Design</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span
+                    class="service-description-link"
+                    data-service="brow-design"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>20 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 22</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/lashlifting.jpg"
+              class="meal-img"
+              alt="Microblading Service"
+            />
+            <div class="service-content">
+              <p class="service-title">Lash Lifting</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span
+                    class="service-description-link"
+                    data-service="lash-lifting"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>60 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 69</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/lipblush.jpg"
+              class="meal-img"
+              alt="Powder Brows Service"
+            />
+            <div class="service-content">
+              <p class="service-title">LipBlush</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span class="service-description-link" data-service="lipblush"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>180 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 399</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/microblading.jpg"
+              class="meal-img"
+              alt="Lash Lifting Service"
+            />
+            <div class="service-content">
+              <p class="service-title">Microblading</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span
+                    class="service-description-link"
+                    data-service="microblading"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>180 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 349</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/eyeliner.jpg"
+              class="meal-img"
+              alt="Lash Extensions Service"
+            />
+            <div class="service-content">
+              <p class="service-title">Eyeliner</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span class="service-description-link" data-service="eyeliner"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>180 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 349</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+
+          <div class="service">
+            <img
+              src="img/Services/microneedeling.jpg"
+              class="meal-img"
+              alt="Brow Tinting Service"
+            />
+            <div class="service-content">
+              <p class="service-title">Microneedling</p>
+              <ul class="service-attributes">
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="eye-outline"></ion-icon>
+                  <span
+                    class="service-description-link"
+                    data-service="microneedling"
+                    >Description</span
+                  >
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="time-outline"></ion-icon>
+                  <span>Duration: <strong>75 min</strong></span>
+                </li>
+                <li class="service-attribute">
+                  <ion-icon class="service-icon" name="cash-outline"></ion-icon>
+                  <span> Price:</span><span>€ 149</span>
+                </li>
+              </ul>
+              <a href="booking.html" class="btn-service">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION TESTIMONIALS -->
+
+      <section class="section section-testimonials" id="testimonials">
+        <div class="testimonials-container">
+          <span class="subheading">Testimonials</span>
+          <h2 class="heading-secondary">Sheen through their eyes</h2>
+          <div class="testimonials">
+            <figure class="testimonial">
+              <img
+                class="testimonial-img"
+                src="img/customers/maryam.png"
+                alt="Photo of customer Maryam Sadreddini"
+              />
+              <blockquote class="testimonial-text">
+                I had an amazing experience at Sheen Beautystudio! Shadi is a
+                true artist who created perfectly natural-looking eyebrows that
+                suit my face beautifully.
+              </blockquote>
+              <p class="testimonial-name">&mdash; Maryam Sadreddini</p>
+            </figure>
+
+            <figure class="testimonial">
+              <img
+                class="testimonial-img"
+                src="img/customers/leo.png"
+                alt="Photo of customer Leo Orta"
+              />
+              <blockquote class="testimonial-text">
+                Sheen Beauty Studio amazed me with flawless microblading and
+                quick service. Shadi's expertise and the elegant location made
+                my experience outstanding.
+              </blockquote>
+              <p class="testimonial-name">&mdash; Leo Orta</p>
+            </figure>
+
+            <figure class="testimonial">
+              <img
+                class="testimonial-img"
+                src="img/customers/laura.png"
+                alt="Photo of customer Mahasa Moeller"
+              />
+              <blockquote class="testimonial-text">
+                Very professional and a pleasant atmosphere. Super flexible and
+                easy appointment booking. Thank you!
+              </blockquote>
+              <p class="testimonial-name">&mdash; Laura Kliche</p>
+            </figure>
+
+            <figure class="testimonial">
+              <img
+                class="testimonial-img"
+                src="img/customers/yana.png"
+                alt="Photo of customer Yana Kosturkova"
+              />
+              <blockquote class="testimonial-text">
+                For me, the best studio for my eyebrows in Berlin. The owner is
+                very knowledgeable and extremely friendly, and the prices are
+                fair.
+              </blockquote>
+              <p class="testimonial-name">&mdash; Yana Kosturkova</p>
+            </figure>
+          </div>
+        </div>
+
+        <!-- GALLARY -->
+        <div class="gallery">
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/auge1.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+            <!-- <figcaption>This is a test</figcaption> -->
+          </figure>
+
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/lippe1.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/augenbraue1.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/lash4.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/augenbraue2.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/eyelash.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/augemessen.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/augenbraue3.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/auge.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/eyelash2.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/eyelash3.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="img/gallery/lippe2.jpg"
+              alt="Photo of beautifully arranged food"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="section section-cta" id="cta">
+        <div class="container">
+          <div class="cta">
+            <div class="cta-text-box">
+              <h2 class="heading-secondary">Contact Us</h2>
+              <p class="cta-text">
+                Have questions or want to book an appointment? Send us a
+                message!
+              </p>
+              <form
+                class="cta-form"
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                id="contact-form"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="bot-field" />
+                <input
+                  type="hidden"
+                  name="subject"
+                  value="New message from website contact form"
+                />
+
+                <div>
+                  <label for="full-name">Name</label>
+                  <input
+                    id="full-name"
+                    type="text"
+                    placeholder="Your Name"
+                    name="name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="email">Email Address</label>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                </div>
+
+                <div class="form-message">
+                  <label for="message">Your Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Write your message here..."
+                    required
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn btn--form">
+                  Send Message
+                </button>
+              </form>
+            </div>
+            <div
+              class="cta-img-box"
+              role="img"
+              aria-label="Woman with beautiful eyes"
+            ></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+      <div class="container grid grid--footer">
+        <div class="logo-col">
+          <a href="#" class="footer-logo">
+            <img class="logo" alt="Sheen logo" src="img/logo_sheen.png" />
+          </a>
+          <p class="footer-text">
+            Enhance your natural beauty with Sheen. Professional microblading,
+            lash lifting, and permanent makeup services in the heart of Berlin.
+          </p>
+          <div class="footer-contact">
+            <p class="contact-heading">Opening Hours:</p>
+            <p class="hours">Mon - Fri: 10:00 - 19:00</p>
+            <p class="hours">Sat: 10:00 - 16:00</p>
+          </div>
+        </div>
+
+        <div class="address-col">
+          <p class="footer-heading">Visit Us</p>
+          <address class="contacts">
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="location-outline"></ion-icon>
+              <p>Kurfürstendamm 180, 10707 Berlin</p>
+            </div>
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="call-outline"></ion-icon>
+              <a class="footer-link" href="tel:+4917632812602"
+                >+49 176-32812602</a
+              >
+            </div>
+            <div class="address-item">
+              <ion-icon class="footer-icon" name="mail-outline"></ion-icon>
+              <a class="footer-link" href="mailto:kontakt@sheenberlin.de"
+                >kontakt@sheenberlin.de</a
+              >
+            </div>
+          </address>
+        </div>
+
+        <nav class="nav-col">
+          <p class="footer-heading">Quick Links</p>
+          <ul class="footer-nav">
+            <li>
+              <a class="footer-link" href="#service">Our Services</a>
+            </li>
+            <li>
+              <a class="footer-link" href="#testimonials">Testimonials</a>
+            </li>
+            <li>
+              <a class="footer-link" href="location.html" target="_blank"
+                >Find us on Maps</a
+              >
+            </li>
+            <li>
+              <a class="footer-link" href="datenschutz.html">Privacy Policy</a>
+            </li>
+            <li>
+              <a class="footer-link" href="impressum.html">Impressum</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="social-col">
+          <p class="footer-heading">Follow Us</p>
+          <div class="social-links">
+            <a
+              class="social-link"
+              href="https://www.instagram.com/sheen_beautystudio/"
+              target="_blank"
+              aria-label="Follow us on Instagram"
+            >
+              <ion-icon class="social-icon" name="logo-instagram"></ion-icon>
+            </a>
+            <a
+              class="social-link"
+              href="https://www.facebook.com/sheen.brows"
+              target="_blank"
+              aria-label="Follow us on Facebook"
+            >
+              <ion-icon class="social-icon" name="logo-facebook"></ion-icon>
+            </a>
+            <a
+              class="social-link"
+              href="https://www.treatwell.de/ort/sheen-berlin/"
+              target="_blank"
+              aria-label="Book on Treatwell"
+            >
+              <img
+                src="img/treatwell-icon.jpg"
+                alt="Treatwell"
+                class="social-icon treatwell-icon"
+              />
+            </a>
+          </div>
+          <p class="copyright">
+            &copy; <span class="year">2024</span> Sheen Beauty Studio. <br />All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Add this popup HTML right before the closing body tag -->
+    <div id="success-popup" class="popup hidden">
+      <div class="popup-content">
+        <h3>Message Sent Successfully!</h3>
+        <p>Thank you for contacting us. We will get back to you soon.</p>
+        <button class="btn btn--form" onclick="closePopup()">Close</button>
+      </div>
+    </div>
+
+    <!-- Fügen Sie dies am Ende des body Tags hinzu, vor dem schließenden </body> -->
+    <div id="serviceModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-description" id="modalDescription"></p>
+      </div>
+    </div>
+
+    <!-- Cookie-Hinweis -->
+    <div class="cookie-banner" id="cookieBanner">
+      <div class="cookie-content">
+        <h3>Cookie Notice</h3>
+        <p>
+          We use cookies to provide you with the best possible experience on our
+          website. By continuing to use this website, you consent to the use of
+          cookies. These help us improve the website and offer you optimized
+          features.
+        </p>
+        <div class="cookie-buttons">
+          <button id="cookieAccept" class="btn-cookie-accept">Accept</button>
+          <button id="cookieDecline" class="btn-cookie-decline">Decline</button>
+          <a href="datenschutz.html" class="cookie-more-info">Learn more</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bild-Vergrößerungs-Modal -->
+    <div id="imageModal" class="image-modal">
+      <span class="close-image-modal">&times;</span>
+      <img class="modal-image" id="modalImage" src="" alt="Vergrößertes Bild" />
+    </div>
+  </body>
+</html>

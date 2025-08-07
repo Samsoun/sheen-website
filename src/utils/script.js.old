@@ -1,0 +1,742 @@
+/**
+ * Diese Datei enthält die JavaScript-Funktionen der traditionellen Website,
+ * angepasst für die Verwendung in React/Next.js.
+ */
+
+const nav = document.querySelector('.main-nav');
+
+// Set current year
+const yearEL = document.querySelector('.year');
+const currentYear = new Date().getFullYear();
+yearEL.textContent = currentYear;
+
+///////////////////////////////////////////////////////////
+// Make mobile navigation work
+
+const btnNavEl = document.querySelector('.btn-mobile-nav');
+const headerEl = document.querySelector('.header');
+
+if (btnNavEl) {
+  btnNavEl.addEventListener('click', function () {
+    headerEl.classList.toggle('nav-open');
+  });
+}
+
+// Sticky navigation
+
+const sectionHeroEl = document.querySelector('.section-hero');
+
+// Funktion zur Initialisierung der Sticky-Navigation
+export function initStickyNavigation(sectionHeroEl) {
+  if (!sectionHeroEl) return () => {};
+
+  const obs = new IntersectionObserver(
+    function (entries) {
+      const ent = entries[0];
+      if (ent.isIntersecting === false) {
+        document.body.classList.add('sticky');
+      }
+      if (ent.isIntersecting === true) {
+        document.body.classList.remove('sticky');
+      }
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: '-80px',
+    }
+  );
+
+  obs.observe(sectionHeroEl);
+
+  // Cleanup-Funktion zurückgeben für useEffect
+  return () => {
+    obs.unobserve(sectionHeroEl);
+  };
+}
+
+///////////////////////////////////////////////////////////
+// Fixing flexbox gap property missing in some Safari versions
+function checkFlexGap() {
+  var flex = document.createElement('div');
+  flex.style.display = 'flex';
+  flex.style.flexDirection = 'column';
+  flex.style.rowGap = '1px';
+
+  flex.appendChild(document.createElement('div'));
+  flex.appendChild(document.createElement('div'));
+
+  document.body.appendChild(flex);
+  var isSupported = flex.scrollHeight === 1;
+  flex.parentNode.removeChild(flex);
+  console.log(isSupported);
+
+  if (!isSupported) document.body.classList.add('no-flexbox-gap');
+}
+
+// Flexbox-Gap-Überprüfung
+export function checkFlexGap() {
+  var flex = document.createElement('div');
+  flex.style.display = 'flex';
+  flex.style.flexDirection = 'column';
+  flex.style.rowGap = '1px';
+
+  flex.appendChild(document.createElement('div'));
+  flex.appendChild(document.createElement('div'));
+
+  document.body.appendChild(flex);
+  var isSupported = flex.scrollHeight === 1;
+  flex.parentNode.removeChild(flex);
+
+  if (!isSupported) document.body.classList.add('no-flexbox-gap');
+}
+
+///////////////////////////////////////
+// Menu fade animation
+const handleHover = function (e) {
+  if (e.target.classList.contains('main-nav-link')) {
+    const link = e.target;
+    const siblings = link.closest('.main-nav').querySelectorAll('.main-nav-link');
+    const logo = link.closest('.main-nav').querySelector('img');
+
+    siblings.forEach((el) => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+// Passing "argument" into handler
+if (nav) {
+  nav.addEventListener('mouseover', handleHover.bind(0.5));
+  nav.addEventListener('mouseout', handleHover.bind(1));
+} else {
+  console.log('Element nicht gefunden, diese Seite benötigt es nicht.');
+}
+
+// Funktion für die Menü-Hover-Animation
+export function setupMenuHoverEffects(nav) {
+  if (!nav) return () => {};
+
+  const handleHover = function (e) {
+    if (e.target.classList.contains('main-nav-link')) {
+      const link = e.target;
+      const siblings = link.closest('.main-nav').querySelectorAll('.main-nav-link');
+      const logo = link.closest('.main-nav').querySelector('img');
+
+      siblings.forEach((el) => {
+        if (el !== link) el.style.opacity = this;
+      });
+      if (logo) logo.style.opacity = this;
+    }
+  };
+
+  // Passing "argument" into handler
+  nav.addEventListener('mouseover', handleHover.bind(0.5));
+  nav.addEventListener('mouseout', handleHover.bind(1));
+
+  // Cleanup-Funktion zurückgeben für useEffect
+  return () => {
+    nav.removeEventListener('mouseover', handleHover.bind(0.5));
+    nav.removeEventListener('mouseout', handleHover.bind(1));
+  };
+}
+
+///////////////////////////////////////
+
+/////////////////////////////////////
+
+/////////////////////////////////////
+// 3D Carousel Functionality
+document.addEventListener('DOMContentLoaded', function () {
+  const carousel = document.querySelector('.carousel-container');
+  const items = document.querySelectorAll('.carousel-item');
+  const imageModal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const closeImageModal = document.querySelector('.close-image-modal');
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  function updateCarousel() {
+    items.forEach((item, index) => {
+      item.classList.remove('active', 'prev-1', 'prev-2', 'next-1', 'next-2', 'hidden');
+
+      const diff = (index - currentIndex + items.length) % items.length;
+
+      if (diff === 0) {
+        item.classList.add('active');
+      } else if (diff === 1 || diff === -4) {
+        item.classList.add('next-1');
+      } else if (diff === 2 || diff === -3) {
+        item.classList.add('next-2');
+      } else if (diff === items.length - 1 || diff === -1) {
+        item.classList.add('prev-1');
+      } else if (diff === items.length - 2 || diff === -2) {
+        item.classList.add('prev-2');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }
+
+  function moveToIndex(index) {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex = (index + items.length) % items.length;
+    updateCarousel();
+    setTimeout(() => {
+      isAnimating = false;
+    }, 500);
+  }
+
+  // Initialize carousel
+  updateCarousel();
+
+  // Bildvergrößerungs-Funktionalität
+  items.forEach((item) => {
+    const img = item.querySelector('img');
+
+    // Doppelklick-Event für Bildvergrößerung
+    item.addEventListener('dblclick', () => {
+      modalImage.src = img.src;
+      imageModal.style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Verhindert Scrollen im Hintergrund
+    });
+
+    // Einzelklick für Karussell-Navigation
+    item.addEventListener('click', () => {
+      const index = parseInt(item.dataset.index);
+      if (!isAnimating && !item.classList.contains('active')) {
+        moveToIndex(index);
+      }
+    });
+
+    // Hover-Effekt
+    item.addEventListener('mouseenter', () => {
+      if (!item.classList.contains('active') && !isAnimating) {
+        moveToIndex(parseInt(item.dataset.index));
+      }
+    });
+  });
+
+  // Modal schließen
+  closeImageModal.addEventListener('click', () => {
+    imageModal.style.display = 'none';
+    document.body.style.overflow = ''; // Scrolling wieder aktivieren
+  });
+
+  // Modal bei Klick außerhalb des Bildes schließen
+  imageModal.addEventListener('click', (e) => {
+    if (e.target === imageModal) {
+      imageModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // ESC-Taste zum Schließen des Modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && imageModal.style.display === 'block') {
+      imageModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Touch-Unterstützung
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        moveToIndex(currentIndex + 1);
+      } else {
+        moveToIndex(currentIndex - 1);
+      }
+    }
+  });
+
+  // Tastatur-Navigation
+  document.addEventListener('keydown', (e) => {
+    if (imageModal.style.display !== 'block') {
+      // Nur wenn Modal nicht geöffnet ist
+      if (e.key === 'ArrowLeft') {
+        moveToIndex(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        moveToIndex(currentIndex + 1);
+      }
+    }
+  });
+
+  // Auto-Rotation
+  let autoRotateInterval = setInterval(() => {
+    if (!isAnimating) {
+      moveToIndex(currentIndex + 1);
+    }
+  }, 5000);
+
+  carousel.addEventListener('mouseenter', () => {
+    clearInterval(autoRotateInterval);
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    autoRotateInterval = setInterval(() => {
+      if (!isAnimating) {
+        moveToIndex(currentIndex + 1);
+      }
+    }, 5000);
+  });
+});
+
+// Scroll Animations
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // Prüfen, ob es sich um eine Service-Sektion handelt und auf einem mobilen Gerät ist
+  if (entry.target.classList.contains('section-service') && window.innerWidth <= 767) {
+    entry.target.classList.remove('section--hidden');
+    entry.target.style.opacity = '1';
+    entry.target.style.visibility = 'visible';
+    entry.target.style.transform = 'translateY(0)';
+    entry.target.style.filter = 'blur(0)';
+  } else {
+    entry.target.classList.remove('section--hidden');
+  }
+
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: window.innerWidth <= 767 ? 0.05 : 0.2, // Niedrigerer Schwellenwert für mobile Geräte
+  rootMargin: window.innerWidth <= 767 ? '-50px' : '0px', // Andere Marge für mobile Geräte
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+
+  // Mobile Gerät-Erkennung
+  if (window.innerWidth <= 767 && section.classList.contains('section-service')) {
+    section.classList.add('section--hidden', 'mobile-section');
+  } else {
+    section.classList.add('section--hidden');
+  }
+});
+
+// Spezielle Behandlung für Service-Sektion auf iPhone
+document.addEventListener('DOMContentLoaded', function () {
+  // Überprüfe, ob es ein mobiles Gerät ist
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isIPhone = /iPhone/i.test(navigator.userAgent);
+
+  if (isMobile || window.innerWidth <= 767) {
+    // Verringere die Zeit für Scroll-Animationen auf Mobilgeräten
+    const serviceSection = document.querySelector('.section-service');
+    if (serviceSection) {
+      // Stelle sicher, dass die Serviceleiste sichtbar ist
+      setTimeout(
+        function () {
+          serviceSection.classList.remove('section--hidden');
+          serviceSection.style.opacity = '1';
+          serviceSection.style.visibility = 'visible';
+          serviceSection.style.transform = 'translateY(0)';
+          serviceSection.style.filter = 'blur(0)';
+        },
+        isIPhone ? 500 : 1000
+      ); // Kürzere Zeit für iPhones
+    }
+  }
+});
+
+// Form submission handling
+const form = document.getElementById('contact-form');
+const popup = document.getElementById('success-popup');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  try {
+    const formData = new FormData(form);
+    await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    });
+
+    // Show success popup
+    popup.classList.remove('hidden');
+
+    // Reset form
+    form.reset();
+  } catch (error) {
+    console.error('Error:', error);
+    alert('There was an error sending your message. Please try again.');
+  }
+});
+
+function closePopup() {
+  popup.classList.add('hidden');
+}
+
+// Close popup when clicking outside
+popup.addEventListener('click', (e) => {
+  if (e.target === popup) {
+    closePopup();
+  }
+});
+
+// Service descriptions
+const serviceDescriptions = {
+  browlifting: {
+    title: 'Browlifting',
+    description:
+      'Browlifting is an innovative treatment that shapes your natural eyebrows and adds more volume. The treatment gently lifts the eyebrows and fixes them in the desired position. The result is a fresh, open look that lasts up to 6-8 weeks.',
+  },
+  'brow-design': {
+    title: 'Brow Design',
+    description:
+      'Brow Design creates the perfect shape for your eyebrows through precise plucking, trimming, and tinting. We consider your natural brow shape and facial features to achieve a harmonious and natural result.',
+  },
+  'lash-lifting': {
+    title: 'Lash Lifting',
+    description:
+      'Lash Lifting is a gentle method to give your natural lashes a dramatic curl. The treatment lifts the lashes from the root, creating an open, expressive look. The result lasts 6-8 weeks.',
+  },
+  lipblush: {
+    title: 'LipBlush',
+    description:
+      'LipBlush is a semi-permanent lip color that gives your lips a natural, even color and definition. The treatment can also balance small asymmetries and make your lips appear fuller.',
+  },
+  microblading: {
+    title: 'Microblading',
+    description:
+      'Microblading is a precise technique for natural-looking eyebrows. Fine hair strokes are drawn into the uppermost layer of skin using a special blade. The result is defined, natural-looking eyebrows that last 1-3 years.',
+  },
+  eyeliner: {
+    title: 'Eyeliner',
+    description:
+      'Permanent Eyeliner emphasizes your eyes in a subtle or dramatic way - according to your wishes. The pigmentation is precisely worked along the lash line and lasts 3-5 years.',
+  },
+  microneedling: {
+    title: 'Microneedling',
+    description:
+      'Microneedling is an effective treatment for skin improvement. Fine needles create microscopic channels in the skin that stimulate collagen production. Ideal for acne scars, fine lines, and general skin rejuvenation.',
+  },
+};
+
+// Modal functionality
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('serviceModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDescription = document.getElementById('modalDescription');
+  const closeModal = document.querySelector('.close-modal');
+
+  // Add click event to all description links
+  document.querySelectorAll('.service-description-link').forEach((link) => {
+    link.addEventListener('click', function () {
+      const serviceId = this.dataset.service;
+      const serviceInfo = serviceDescriptions[serviceId];
+
+      if (serviceInfo) {
+        modalTitle.textContent = serviceInfo.title;
+        modalDescription.textContent = serviceInfo.description;
+        modal.style.display = 'block';
+      }
+    });
+  });
+
+  // Close modal when clicking the close button
+  if (closeModal) {
+    closeModal.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+  } else {
+    console.log('Element nicht gefunden, diese Seite benötigt es nicht.');
+  }
+
+  // Close modal when clicking outside
+  window.addEventListener('click', function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
+
+// Hero Slider Functionality
+const heroSlides = document.querySelectorAll('.hero-slide');
+const heroDots = document.querySelectorAll('.hero-dot');
+let currentHeroSlide = 0;
+const slideInterval = 7000; // 7 seconds
+
+function showHeroSlide(index) {
+  // Remove active class from all slides and dots
+  heroSlides.forEach((slide) => slide.classList.remove('active'));
+  heroDots.forEach((dot) => dot.classList.remove('active'));
+
+  // Add active class to current slide and dot
+  heroSlides[index].classList.add('active');
+  heroDots[index].classList.add('active');
+}
+
+function nextHeroSlide() {
+  currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+  showHeroSlide(currentHeroSlide);
+}
+
+// Add click event listeners to dots
+heroDots.forEach((dot, index) => {
+  if (dot) {
+    dot.addEventListener('click', () => {
+      currentHeroSlide = index;
+      showHeroSlide(currentHeroSlide);
+      // Reset the interval when manually changing slides
+      clearInterval(heroSlideTimer);
+      heroSlideTimer = setInterval(nextHeroSlide, slideInterval);
+    });
+  } else {
+    console.log('Element nicht gefunden, diese Seite benötigt es nicht.');
+  }
+});
+
+// Start automatic slideshow
+let heroSlideTimer = setInterval(nextHeroSlide, slideInterval);
+
+// Füge mobiles Navigationsmenü-Funktionalität hinzu
+document.addEventListener('DOMContentLoaded', function () {
+  // Ursprüngliche Mobilnavigation verwenden
+  const mobileNavLinks = document.querySelectorAll('.main-nav-link');
+
+  // Schließe das mobile Menü, wenn ein Link geklickt wird
+  if (mobileNavLinks) {
+    mobileNavLinks.forEach((link) => {
+      link.addEventListener('click', function () {
+        if (window.innerWidth <= 944) {
+          // 59em = 944px
+          headerEl.classList.remove('nav-open');
+        }
+      });
+    });
+  }
+
+  // Entfernen von mobilMenuToggle-Eventlisteners falls vorhanden
+  const mobileMenuButton = document.querySelector('.mobile-menu-toggle');
+  if (mobileMenuButton) {
+    const newButton = mobileMenuButton.cloneNode(true);
+    if (mobileMenuButton.parentNode) {
+      mobileMenuButton.parentNode.replaceChild(newButton, mobileMenuButton);
+    }
+  }
+});
+
+// Verbesserte Version des Video-Handlers
+document.addEventListener('DOMContentLoaded', function () {
+  // Video-Element und Fallback-Bild
+  const heroVideo = document.getElementById('hero-video');
+  const fallbackImg = document.querySelector('.hero-fallback-img');
+
+  if (heroVideo) {
+    // Video laden und auf Fehler überwachen
+    heroVideo.addEventListener('loadeddata', function () {
+      console.log('Video erfolgreich geladen');
+      // Sicherstellen, dass das Video sichtbar ist
+      heroVideo.style.display = 'block';
+      heroVideo.style.opacity = '1';
+      if (fallbackImg) fallbackImg.style.display = 'none';
+    });
+
+    // Bei Fehler Fallback-Bild anzeigen
+    heroVideo.addEventListener('error', function (e) {
+      console.error('Fehler beim Laden des Videos:', e);
+      if (fallbackImg) {
+        fallbackImg.style.display = 'block';
+        heroVideo.style.display = 'none';
+      }
+    });
+
+    // Versuche das Video abzuspielen
+    try {
+      const playPromise = heroVideo.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Video wird abgespielt');
+          })
+          .catch((error) => {
+            console.error('Autoplay verhindert:', error);
+
+            // Erneut versuchen - manchmal hilft es, einen kurzen Moment zu warten
+            setTimeout(() => {
+              heroVideo.muted = true; // Stummschalten erzwingen
+              heroVideo.play().catch((e) => {
+                console.error('Video konnte auch nach Verzögerung nicht abgespielt werden:', e);
+                // Als letzten Ausweg das Fallback-Bild zeigen
+                if (fallbackImg) {
+                  fallbackImg.style.display = 'block';
+                  heroVideo.style.display = 'none';
+                }
+              });
+            }, 100);
+          });
+      }
+    } catch (error) {
+      console.error('Fehler beim Abspielen des Videos:', error);
+      // Bei Fehler das Fallback-Bild anzeigen
+      if (fallbackImg) {
+        fallbackImg.style.display = 'block';
+        heroVideo.style.display = 'none';
+      }
+    }
+  }
+});
+
+// Optimierter Video-Handler speziell für Mobilgeräte
+document.addEventListener('DOMContentLoaded', function () {
+  const heroVideo = document.getElementById('hero-video');
+  const fallbackImg = document.querySelector('.hero-fallback-img');
+  const isMobile = window.innerWidth <= 768;
+
+  // Funktionen zur Erkennung von Mobilgeräten und Leistungsfähigkeit
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  }
+
+  function isLowEndDevice() {
+    return navigator.deviceMemory && navigator.deviceMemory < 4;
+  }
+
+  if (heroVideo) {
+    // Für Mobilgeräte mit geringer Leistung Anpassungen vornehmen
+    if (isMobile || isMobileDevice()) {
+      console.log('Mobilgerät erkannt, optimiere Video');
+
+      // Video-Qualität für Mobilgeräte optimieren
+      heroVideo.setAttribute('playsinline', '');
+      heroVideo.setAttribute('muted', '');
+      heroVideo.muted = true;
+
+      // Bei Low-End-Geräten oder iPhone die Wiedergabequalität reduzieren
+      if (isLowEndDevice() || /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        console.log('Low-End-Gerät erkannt, reduziere Videoqualität');
+        heroVideo.style.filter = 'none'; // Filtereffekte entfernen
+      }
+
+      // Auf iOS prüfen, ob Video wirklich läuft, und bei Problemen Fallback anzeigen
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        setTimeout(() => {
+          if (heroVideo.paused) {
+            console.log('Video läuft nicht auf iOS, zeige Fallback');
+            if (fallbackImg) {
+              fallbackImg.style.display = 'block';
+              heroVideo.style.display = 'none';
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    // Überwachen des Netzwerkstatus für langsame Verbindungen
+    if (
+      navigator.connection &&
+      (navigator.connection.effectiveType === 'slow-2g' ||
+        navigator.connection.effectiveType === '2g')
+    ) {
+      console.log('Langsame Netzwerkverbindung erkannt, zeige Fallback');
+      if (fallbackImg) {
+        fallbackImg.style.display = 'block';
+        heroVideo.style.display = 'none';
+      }
+    }
+
+    // Bei langsamer Wiedergabe auf Fallback umschalten
+    let lastTime = 0;
+    let stuckCounter = 0;
+
+    heroVideo.addEventListener('timeupdate', function () {
+      const currentTime = heroVideo.currentTime;
+      if (Math.abs(currentTime - lastTime) < 0.1) {
+        stuckCounter++;
+        if (stuckCounter > 5) {
+          console.log('Video stockt, zeige Fallback');
+          if (fallbackImg) {
+            fallbackImg.style.display = 'block';
+            heroVideo.style.display = 'none';
+          }
+        }
+      } else {
+        stuckCounter = 0;
+      }
+      lastTime = currentTime;
+    });
+  }
+});
+
+// Cookie-Funktionen
+const setCookie = function (name, value, days) {
+  let expires = '';
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = '; expires=' + date.toUTCString();
+  }
+  document.cookie = name + '=' + (value || '') + expires + '; path=/';
+};
+
+const getCookie = function (name) {
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+};
+
+// Cookie-Banner Funktionalität
+document.addEventListener('DOMContentLoaded', function () {
+  // Cookie-Banner anzeigen, wenn noch keine Entscheidung getroffen wurde
+  const cookieBanner = document.getElementById('cookieBanner');
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieDecline = document.getElementById('cookieDecline');
+
+  if (!getCookie('cookieConsent')) {
+    cookieBanner.style.display = 'block';
+  }
+
+  // Event-Listener für die Buttons
+  cookieAccept.addEventListener('click', function () {
+    setCookie('cookieConsent', 'accepted', 365);
+    cookieBanner.style.display = 'none';
+    // Hier können Sie Code hinzufügen, um zusätzliche Cookies zu setzen oder Analytics zu aktivieren
+  });
+
+  cookieDecline.addEventListener('click', function () {
+    setCookie('cookieConsent', 'declined', 365);
+    cookieBanner.style.display = 'none';
+    // Hier können Sie Code hinzufügen, um bestimmte Funktionen zu deaktivieren
+  });
+});
+
+// Hauptinitialisierungsfunktion für die traditionelle Website
+export function initializeApp() {
+  // Diese Funktion wird in React nicht direkt verwendet,
+  // da wir die Logik in useEffect-Hooks und Event-Handlern integrieren
+  console.log('Die initializeApp-Funktion wird in React nicht direkt verwendet');
+}
+
+// Weitere Funktionen aus Ihrem ursprünglichen JavaScript
+export function otherFunction() {
+  // ...
+}

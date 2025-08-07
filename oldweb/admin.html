@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sheen Admin - Terminverwaltung</title>
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <a href="index.html">
+          <img class="logo" alt="Sheen logo" src="img/logo.png" />
+        </a>
+      </div>
+      <h1>Admin-Bereich</h1>
+      <button id="logout-btn" class="btn">Abmelden</button>
+    </header>
+
+    <main>
+      <section class="section-admin">
+        <div class="container">
+          <!-- Login-Formular (wird angezeigt, wenn nicht eingeloggt) -->
+          <div id="login-container">
+            <h2 class="heading-secondary">Admin Login</h2>
+            <form id="login-form" class="admin-form">
+              <div class="form-group">
+                <label for="admin-email">E-Mail</label>
+                <input type="email" id="admin-email" required />
+              </div>
+              <div class="form-group">
+                <label for="admin-password">Passwort</label>
+                <input type="password" id="admin-password" required />
+              </div>
+              <button type="submit" class="btn btn--form">Anmelden</button>
+            </form>
+          </div>
+
+          <!-- Admin-Dashboard (wird angezeigt, wenn eingeloggt) -->
+          <div id="admin-dashboard" class="hidden">
+            <h2 class="heading-secondary">Terminverwaltung</h2>
+
+            <div class="filter-controls">
+              <div class="form-group">
+                <label for="date-filter">Datum filtern</label>
+                <input type="date" id="date-filter" />
+              </div>
+              <div class="form-group">
+                <label for="status-filter">Status</label>
+                <select id="status-filter">
+                  <option value="all">Alle</option>
+                  <option value="pending">Ausstehend</option>
+                  <option value="confirmed">Bestätigt</option>
+                  <option value="cancelled">Storniert</option>
+                </select>
+              </div>
+              <button id="clear-filters" class="btn">
+                Filter zurücksetzen
+              </button>
+            </div>
+
+            <div class="bookings-container">
+              <table class="bookings-table">
+                <thead>
+                  <tr>
+                    <th>Datum</th>
+                    <th>Zeit</th>
+                    <th>Service</th>
+                    <th>Kunde</th>
+                    <th>Kontakt</th>
+                    <th>Status</th>
+                    <th>Aktionen</th>
+                  </tr>
+                </thead>
+                <tbody id="bookings-list">
+                  <!-- Buchungen werden hier dynamisch eingefügt -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Firebase Konfiguration -->
+    <script>
+      // Firebase-Konfiguration
+      const firebaseConfig = {
+        apiKey: "AIzaSyB7tnzEzeRBqQ1JL8aNgRe2PPuOS0Mt5Ms",
+        authDomain: "sheen-termin.firebaseapp.com",
+        projectId: "sheen-termin",
+        storageBucket: "sheen-termin.firebasestorage.app",
+        messagingSenderId: "531525100411",
+        appId: "1:531525100411:web:59b8c142e3deca949613de",
+        measurementId: "G-F69XYP1FV5",
+      };
+
+      // Firebase initialisieren
+      firebase.initializeApp(firebaseConfig);
+
+      // Firestore-Referenz erstellen
+      const db = firebase.firestore();
+      const auth = firebase.auth();
+    </script>
+
+    <!-- Admin-Skript -->
+    <script src="js/admin.js"></script>
+  </body>
+</html>
